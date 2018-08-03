@@ -71,7 +71,7 @@ export abstract class MessageQueue implements IMessageQueue, IReferenceable, ICo
 
     protected abstract openWithParams(correlationId: string, connection: ConnectionParams, credential: CredentialParams, callback: (err: any) => void): void;
 
-    public abstract isOpened(): boolean;
+    public abstract isOpen(): boolean;
     public abstract close(correlationId: string, callback: (err: any) => void): void;
     public abstract clear(correlationId: string, callback: (err: any) => void): void;
 

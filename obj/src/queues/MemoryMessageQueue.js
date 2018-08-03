@@ -14,7 +14,7 @@ class MemoryMessageQueue extends MessageQueue_1.MessageQueue {
         this._cancel = false;
         this._capabilities = new MessagingCapabilities_1.MessagingCapabilities(true, true, true, true, true, true, true, false, true);
     }
-    isOpened() {
+    isOpen() {
         return this._opened;
     }
     openWithParams(correlationId, connection, credential, callback) {
