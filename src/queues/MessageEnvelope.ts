@@ -1,7 +1,10 @@
 /** @module queues */
 import { IdGenerator } from 'pip-services-commons-node';
 
-export class MessageEnvelop {
+/**
+ * 
+ */
+export class MessageEnvelope {
     private _reference: any;
 
 	public constructor(correlationId: string, messageType: string, message: any) {

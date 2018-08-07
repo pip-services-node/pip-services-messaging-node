@@ -2,7 +2,7 @@ let assert = require('chai').assert;
 let async = require('async');
 
 import { IMessageQueue } from '../../src/queues/IMessageQueue';
-import { MessageEnvelop } from '../../src/queues/MessageEnvelop';
+import { MessageEnvelope } from '../../src/queues/MessageEnvelope';
 
 export class MessageQueueFixture {
     private _queue: IMessageQueue;
@@ -12,12 +12,12 @@ export class MessageQueueFixture {
     }
 
     public testSendReceiveMessage(done) {
-        let envelop1: MessageEnvelop = new MessageEnvelop("123", "Test", "Test message");
-        let envelop2: MessageEnvelop;
+        let envelope1: MessageEnvelope = new MessageEnvelope("123", "Test", "Test message");
+        let envelope2: MessageEnvelope;
 
         async.series([
             (callback) => {
-                this._queue.send(null, envelop1, callback);
+                this._queue.send(null, envelope1, callback);
             },
             (callback) => {
                 var count = this._queue.readMessageCount((err, count) => {
@@ -27,12 +27,12 @@ export class MessageQueueFixture {
             },
             (callback) => {
                 this._queue.receive(null, 10000, (err, result) => {
-                    envelop2 = result;
+                    envelope2 = result;
 
-                    assert.isNotNull(envelop2);
-                    assert.equal(envelop1.message_type, envelop2.message_type);
-                    assert.equal(envelop1.message, envelop2.message);
-                    assert.equal(envelop1.correlation_id, envelop2.correlation_id);
+                    assert.isNotNull(envelope2);
+                    assert.equal(envelope1.message_type, envelope2.message_type);
+                    assert.equal(envelope1.message, envelope2.message);
+                    assert.equal(envelope1.correlation_id, envelope2.correlation_id);
 
                     callback(err);
                 });
@@ -41,32 +41,32 @@ export class MessageQueueFixture {
     }
 
     public testReceiveSendMessage(done) {
-        let envelop1: MessageEnvelop = new MessageEnvelop("123", "Test", "Test message");
-        let envelop2: MessageEnvelop;
+        let envelope1: MessageEnvelope = new MessageEnvelope("123", "Test", "Test message");
+        let envelope2: MessageEnvelope;
 
         setTimeout(() => {
-            this._queue.send(null, envelop1, () => { });
+            this._queue.send(null, envelope1, () => { });
         }, 500);
 
         this._queue.receive(null, 10000, (err, result) => {
-            envelop2 = result;
+            envelope2 = result;
 
-            assert.isNotNull(envelop2);
-            assert.equal(envelop1.message_type, envelop2.message_type);
-            assert.equal(envelop1.message, envelop2.message);
-            assert.equal(envelop1.correlation_id, envelop2.correlation_id);
+            assert.isNotNull(envelope2);
+            assert.equal(envelope1.message_type, envelope2.message_type);
+            assert.equal(envelope1.message, envelope2.message);
+            assert.equal(envelope1.correlation_id, envelope2.correlation_id);
 
             done(err);
         });
     }
 
     public testReceiveCompleteMessage(done) {
-        let envelop1: MessageEnvelop = new MessageEnvelop("123", "Test", "Test message");
-        let envelop2: MessageEnvelop;
+        let envelope1: MessageEnvelope = new MessageEnvelope("123", "Test", "Test message");
+        let envelope2: MessageEnvelope;
 
         async.series([
             (callback) => {
-                this._queue.send(null, envelop1, callback);
+                this._queue.send(null, envelope1, callback);
             },
             (callback) => {
                 var count = this._queue.readMessageCount((err, count) => {
@@ -76,19 +76,19 @@ export class MessageQueueFixture {
             },
             (callback) => {
                 this._queue.receive(null, 10000, (err, result) => {
-                    envelop2 = result;
+                    envelope2 = result;
 
-                    assert.isNotNull(envelop2);
-                    assert.equal(envelop1.message_type, envelop2.message_type);
-                    assert.equal(envelop1.message, envelop2.message);
-                    assert.equal(envelop1.correlation_id, envelop2.correlation_id);
+                    assert.isNotNull(envelope2);
+                    assert.equal(envelope1.message_type, envelope2.message_type);
+                    assert.equal(envelope1.message, envelope2.message);
+                    assert.equal(envelope1.correlation_id, envelope2.correlation_id);
 
                     callback(err);
                 });
             },
             (callback) => {
-                this._queue.complete(envelop2, (err) => {
-                    assert.isNull(envelop2.getReference());
+                this._queue.complete(envelope2, (err) => {
+                    assert.isNull(envelope2.getReference());
                     callback(err);
                 });
             }
@@ -96,38 +96,38 @@ export class MessageQueueFixture {
     }
 
     public testReceiveAbandonMessage(done) {
-        let envelop1: MessageEnvelop = new MessageEnvelop("123", "Test", "Test message");
-        let envelop2: MessageEnvelop;
+        let envelope1: MessageEnvelope = new MessageEnvelope("123", "Test", "Test message");
+        let envelope2: MessageEnvelope;
 
         async.series([
             (callback) => {
-                this._queue.send(null, envelop1, callback);
+                this._queue.send(null, envelope1, callback);
             },
             (callback) => {
                 this._queue.receive(null, 10000, (err, result) => {
-                    envelop2 = result;
+                    envelope2 = result;
 
-                    assert.isNotNull(envelop2);
-                    assert.equal(envelop1.message_type, envelop2.message_type);
-                    assert.equal(envelop1.message, envelop2.message);
-                    assert.equal(envelop1.correlation_id, envelop2.correlation_id);
+                    assert.isNotNull(envelope2);
+                    assert.equal(envelope1.message_type, envelope2.message_type);
+                    assert.equal(envelope1.message, envelope2.message);
+                    assert.equal(envelope1.correlation_id, envelope2.correlation_id);
 
                     callback(err);
                 });
             },
             (callback) => {
-                this._queue.abandon(envelop2, (err) => {
+                this._queue.abandon(envelope2, (err) => {
                     callback(err);
                 });
             },
             (callback) => {
                 this._queue.receive(null, 10000, (err, result) => {
-                    envelop2 = result;
+                    envelope2 = result;
 
-                    assert.isNotNull(envelop2);
-                    assert.equal(envelop1.message_type, envelop2.message_type);
-                    assert.equal(envelop1.message, envelop2.message);
-                    assert.equal(envelop1.correlation_id, envelop2.correlation_id);
+                    assert.isNotNull(envelope2);
+                    assert.equal(envelope1.message_type, envelope2.message_type);
+                    assert.equal(envelope1.message, envelope2.message);
+                    assert.equal(envelope1.correlation_id, envelope2.correlation_id);
 
                     callback(err);
                 });
@@ -136,21 +136,21 @@ export class MessageQueueFixture {
     }
 
     public testSendPeekMessage(done) {
-        let envelop1: MessageEnvelop = new MessageEnvelop("123", "Test", "Test message");
-        let envelop2: MessageEnvelop;
+        let envelope1: MessageEnvelope = new MessageEnvelope("123", "Test", "Test message");
+        let envelope2: MessageEnvelope;
 
         async.series([
             (callback) => {
-                this._queue.send(null, envelop1, callback);
+                this._queue.send(null, envelope1, callback);
             },
             (callback) => {
                 this._queue.peek(null, (err, result) => {
-                    envelop2 = result;
+                    envelope2 = result;
 
-                    assert.isNotNull(envelop2);
-                    assert.equal(envelop1.message_type, envelop2.message_type);
-                    assert.equal(envelop1.message, envelop2.message);
-                    assert.equal(envelop1.correlation_id, envelop2.correlation_id);
+                    assert.isNotNull(envelope2);
+                    assert.equal(envelope1.message_type, envelope2.message_type);
+                    assert.equal(envelope1.message, envelope2.message);
+                    assert.equal(envelope1.correlation_id, envelope2.correlation_id);
 
                     callback(err);
                 });
@@ -166,38 +166,38 @@ export class MessageQueueFixture {
     }
 
     public testMoveToDeadMessage(done) {
-        let envelop1: MessageEnvelop = new MessageEnvelop("123", "Test", "Test message");
-        let envelop2: MessageEnvelop;
+        let envelope1: MessageEnvelope = new MessageEnvelope("123", "Test", "Test message");
+        let envelope2: MessageEnvelope;
 
         async.series([
             (callback) => {
-                this._queue.send(null, envelop1, callback);
+                this._queue.send(null, envelope1, callback);
             },
             (callback) => {
                 this._queue.receive(null, 10000, (err, result) => {
-                    envelop2 = result;
+                    envelope2 = result;
 
-                    assert.isNotNull(envelop2);
-                    assert.equal(envelop1.message_type, envelop2.message_type);
-                    assert.equal(envelop1.message, envelop2.message);
-                    assert.equal(envelop1.correlation_id, envelop2.correlation_id);
+                    assert.isNotNull(envelope2);
+                    assert.equal(envelope1.message_type, envelope2.message_type);
+                    assert.equal(envelope1.message, envelope2.message);
+                    assert.equal(envelope1.correlation_id, envelope2.correlation_id);
 
                     callback(err);
                 });
             },
             (callback) => {
-                this._queue.moveToDeadLetter(envelop2, callback);
+                this._queue.moveToDeadLetter(envelope2, callback);
             }
         ], done);
     }
 
     public testOnMessage(done) {
-        let envelop1: MessageEnvelop = new MessageEnvelop("123", "Test", "Test message");
-        let envelop2: MessageEnvelop = null;
+        let envelope1: MessageEnvelope = new MessageEnvelope("123", "Test", "Test message");
+        let envelope2: MessageEnvelope = null;
 
         this._queue.beginListen(null, {
-            receiveMessage: (envelop: MessageEnvelop, queue: IMessageQueue, callback: (err: any) => void): void => {
-                envelop2 = envelop;
+            receiveMessage: (envelop: MessageEnvelope, queue: IMessageQueue, callback: (err: any) => void): void => {
+                envelope2 = envelop;
                 callback(null);
             }
         });
@@ -209,7 +209,7 @@ export class MessageQueueFixture {
                 }, 1000);
             },
             (callback) => {
-                this._queue.send(null, envelop1, callback);
+                this._queue.send(null, envelope1, callback);
             },
             (callback) => {
                 setTimeout(() => {
@@ -217,10 +217,10 @@ export class MessageQueueFixture {
                 }, 1000);
             },
             (callback) => {
-                assert.isNotNull(envelop2);
-                assert.equal(envelop1.message_type, envelop2.message_type);
-                assert.equal(envelop1.message, envelop2.message);
-                assert.equal(envelop1.correlation_id, envelop2.correlation_id);
+                assert.isNotNull(envelope2);
+                assert.equal(envelope1.message_type, envelope2.message_type);
+                assert.equal(envelope1.message, envelope2.message);
+                assert.equal(envelope1.correlation_id, envelope2.correlation_id);
 
                 callback();
             }

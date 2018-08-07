@@ -7,12 +7,12 @@ import { CredentialParams } from 'pip-services-components-node';
 
 import { IMessageReceiver } from './IMessageReceiver';
 import { MessageQueue } from './MessageQueue';
-import { MessageEnvelop } from './MessageEnvelop';
+import { MessageEnvelope } from './MessageEnvelope';
 import { MessagingCapabilities } from './MessagingCapabilities';
 import { LockedMessage } from './LockedMessage';
 
 export class MemoryMessageQueue extends MessageQueue {
-    private _messages: MessageEnvelop[] = [];
+    private _messages: MessageEnvelope[] = [];
     private _lockTokenSequence: number = 0;
     private _lockedMessages: { [id: number]: LockedMessage; } = {};
     private _opened: boolean = false;
@@ -52,14 +52,14 @@ export class MemoryMessageQueue extends MessageQueue {
         callback(null, count);
     }
 
-    public send(correlationId: string, envelop: MessageEnvelop, callback?: (err: any) => void): void {
+    public send(correlationId: string, envelope: MessageEnvelope, callback?: (err: any) => void): void {
         try {
-            envelop.sent_time = new Date();
+            envelope.sent_time = new Date();
             // Add message to the queue
-            this._messages.push(envelop);
+            this._messages.push(envelope);
 
             this._counters.incrementOne("queue." + this.getName() + ".sent_messages");
-            this._logger.debug(envelop.correlation_id, "Sent message %s via %s", envelop.toString(), this.toString());
+            this._logger.debug(envelope.correlation_id, "Sent message %s via %s", envelope.toString(), this.toString());
 
             if (callback) callback(null);
         } catch (ex) {
@@ -68,9 +68,9 @@ export class MemoryMessageQueue extends MessageQueue {
         }
     }
 
-    public peek(correlationId: string, callback: (err: any, result: MessageEnvelop) => void): void {
+    public peek(correlationId: string, callback: (err: any, result: MessageEnvelope) => void): void {
         try {
-            let message: MessageEnvelop = null;
+            let message: MessageEnvelope = null;
 
             // Pick a message
             if (this._messages.length > 0)
@@ -85,7 +85,7 @@ export class MemoryMessageQueue extends MessageQueue {
         }
     }
 
-    public peekBatch(correlationId: string, messageCount: number, callback: (err: any, result: MessageEnvelop[]) => void): void {
+    public peekBatch(correlationId: string, messageCount: number, callback: (err: any, result: MessageEnvelope[]) => void): void {
         try {
             let messages = this._messages.slice(0, messageCount);
             
@@ -97,9 +97,9 @@ export class MemoryMessageQueue extends MessageQueue {
         }
     }
 
-    public receive(correlationId: string, waitTimeout: number, callback: (err: any, result: MessageEnvelop) => void): void {
+    public receive(correlationId: string, waitTimeout: number, callback: (err: any, result: MessageEnvelope) => void): void {
         let err: any = null;
-        let message: MessageEnvelop = null;
+        let message: MessageEnvelope = null;
         let messageReceived: boolean = false;
 
         let checkIntervalMs = 100;
@@ -154,7 +154,7 @@ export class MemoryMessageQueue extends MessageQueue {
         );
     }
 
-    public renewLock(message: MessageEnvelop, lockTimeout: number, callback?: (err: any) => void): void {
+    public renewLock(message: MessageEnvelope, lockTimeout: number, callback?: (err: any) => void): void {
         if (message.getReference() == null) {
             if (callback) callback(null);
             return;
@@ -184,7 +184,7 @@ export class MemoryMessageQueue extends MessageQueue {
         }
     }
 
-    public complete(message: MessageEnvelop, callback: (err: any) => void): void {
+    public complete(message: MessageEnvelope, callback: (err: any) => void): void {
         if (message.getReference() == null) {
             if (callback) callback(null);
             return;
@@ -204,7 +204,7 @@ export class MemoryMessageQueue extends MessageQueue {
         }
     }
 
-    public abandon(message: MessageEnvelop, callback: (err: any) => void): void {
+    public abandon(message: MessageEnvelope, callback: (err: any) => void): void {
         if (message.getReference() == null) {
             if (callback) callback(null);
             return;
@@ -242,7 +242,7 @@ export class MemoryMessageQueue extends MessageQueue {
         this.send(message.correlation_id, message, null);
     }
 
-    public moveToDeadLetter(message: MessageEnvelop, callback: (err: any) => void): void {
+    public moveToDeadLetter(message: MessageEnvelope, callback: (err: any) => void): void {
         if (message.getReference() == null) {
             if (callback) callback(null);
             return;
@@ -275,7 +275,7 @@ export class MemoryMessageQueue extends MessageQueue {
                 return !this._cancel;
             },
             (whilstCallback) => {
-                let message: MessageEnvelop;
+                let message: MessageEnvelope;
 
                 async.series([
                     (callback) => {

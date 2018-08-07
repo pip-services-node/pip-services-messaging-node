@@ -1,3 +1,4 @@
+/** @module queues */
 export declare class MessagingCapabilities {
     private _canMessageCount;
     private _canSend;

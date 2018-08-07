@@ -1,5 +1,20 @@
+/** @module queues */
 import { IMessageQueue } from './IMessageQueue';
-import { MessageEnvelop } from './MessageEnvelop';
+import { MessageEnvelope } from './MessageEnvelope';
+/**
+ * Interface for classes that need to be able to receive messages.
+ */
 export interface IMessageReceiver {
-    receiveMessage(envelop: MessageEnvelop, queue: IMessageQueue, callback: (err: any) => void): void;
+    /**
+     * Abstract method that will contain the logic for receiving a message.
+     *
+     * @param envelope   the message's envelope
+     * @param queue     the queue that the message is in.
+     * @param callback  the function to call once the message has been received.
+     *                  Will be called with an error, if one is raised.
+     *
+     * @see [[MessageEnvelope]]
+     * @see [[IMessageQueue]]
+     */
+    receiveMessage(envelope: MessageEnvelope, queue: IMessageQueue, callback: (err: any) => void): void;
 }

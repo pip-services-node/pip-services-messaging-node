@@ -17,7 +17,7 @@ import { CredentialParams } from 'pip-services-components-node';
 import { IMessageQueue } from './IMessageQueue';
 import { IMessageReceiver } from './IMessageReceiver';
 import { MessagingCapabilities } from './MessagingCapabilities';
-import { MessageEnvelop } from './MessageEnvelop';
+import { MessageEnvelope } from './MessageEnvelope';
 
 export abstract class MessageQueue implements IMessageQueue, IReferenceable, IConfigurable {
     protected _logger: CompositeLogger = new CompositeLogger();
@@ -79,20 +79,20 @@ export abstract class MessageQueue implements IMessageQueue, IReferenceable, ICo
 
     public abstract readMessageCount(callback: (err: any, count: number) => void): void;
 
-    public abstract send(correlationId: string, envelop: MessageEnvelop, callback?: (err: any) => void): void;
+    public abstract send(correlationId: string, envelope: MessageEnvelope, callback?: (err: any) => void): void;
     public sendAsObject(correlationId: string, messageType: string, message: any, callback?: (err: any) => void): void {
-        var envelop = new MessageEnvelop(correlationId, messageType, message);
-        this.send(correlationId, envelop, callback);
+        var envelope = new MessageEnvelope(correlationId, messageType, message);
+        this.send(correlationId, envelope, callback);
     }
 
-    public abstract peek(correlationId: string, callback: (err: any, result: MessageEnvelop) => void): void;
-    public abstract peekBatch(correlationId: string, messageCount: number, callback: (err: any, result: MessageEnvelop[]) => void): void;
-    public abstract receive(correlationId: string, waitTimeout: number, callback: (err: any, result: MessageEnvelop) => void): void;
+    public abstract peek(correlationId: string, callback: (err: any, result: MessageEnvelope) => void): void;
+    public abstract peekBatch(correlationId: string, messageCount: number, callback: (err: any, result: MessageEnvelope[]) => void): void;
+    public abstract receive(correlationId: string, waitTimeout: number, callback: (err: any, result: MessageEnvelope) => void): void;
 
-    public abstract renewLock(message: MessageEnvelop, lockTimeout: number, callback?: (err: any) => void): void;
-    public abstract complete(message: MessageEnvelop, callback?: (err: any) => void): void;
-    public abstract abandon(message: MessageEnvelop, callback?: (err: any) => void): void;
-    public abstract moveToDeadLetter(message: MessageEnvelop, callback?: (err: any) => void): void;
+    public abstract renewLock(message: MessageEnvelope, lockTimeout: number, callback?: (err: any) => void): void;
+    public abstract complete(message: MessageEnvelope, callback?: (err: any) => void): void;
+    public abstract abandon(message: MessageEnvelope, callback?: (err: any) => void): void;
+    public abstract moveToDeadLetter(message: MessageEnvelope, callback?: (err: any) => void): void;
 
     public abstract listen(correlationId: string, receiver: IMessageReceiver): void;
     public abstract endListen(correlationId: string): void;

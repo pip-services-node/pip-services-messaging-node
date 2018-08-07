@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/** @module queues */
+/** @hidden */
 const async = require('async');
 const MessageQueue_1 = require("./MessageQueue");
 const MessagingCapabilities_1 = require("./MessagingCapabilities");
@@ -37,13 +39,13 @@ class MemoryMessageQueue extends MessageQueue_1.MessageQueue {
         let count = this._messages.length;
         callback(null, count);
     }
-    send(correlationId, envelop, callback) {
+    send(correlationId, envelope, callback) {
         try {
-            envelop.sent_time = new Date();
+            envelope.sent_time = new Date();
             // Add message to the queue
-            this._messages.push(envelop);
+            this._messages.push(envelope);
             this._counters.incrementOne("queue." + this.getName() + ".sent_messages");
-            this._logger.debug(envelop.correlation_id, "Sent message %s via %s", envelop.toString(), this.toString());
+            this._logger.debug(envelope.correlation_id, "Sent message %s via %s", envelope.toString(), this.toString());
             if (callback)
                 callback(null);
         }

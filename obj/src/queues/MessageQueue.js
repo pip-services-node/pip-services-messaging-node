@@ -1,12 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/** @module queues */
+/** @hidden */
 var async = require('async');
 const pip_services_commons_node_1 = require("pip-services-commons-node");
 const pip_services_components_node_1 = require("pip-services-components-node");
 const pip_services_components_node_2 = require("pip-services-components-node");
 const pip_services_components_node_3 = require("pip-services-components-node");
 const pip_services_components_node_4 = require("pip-services-components-node");
-const MessageEnvelop_1 = require("./MessageEnvelop");
+const MessageEnvelope_1 = require("./MessageEnvelope");
 class MessageQueue {
     constructor(name) {
         this._logger = new pip_services_components_node_1.CompositeLogger();
@@ -49,8 +51,8 @@ class MessageQueue {
         this.openWithParams(correlationId, connection, credential, callback);
     }
     sendAsObject(correlationId, messageType, message, callback) {
-        var envelop = new MessageEnvelop_1.MessageEnvelop(correlationId, messageType, message);
-        this.send(correlationId, envelop, callback);
+        var envelope = new MessageEnvelope_1.MessageEnvelope(correlationId, messageType, message);
+        this.send(correlationId, envelope, callback);
     }
     beginListen(correlationId, receiver) {
         setImmediate(() => {

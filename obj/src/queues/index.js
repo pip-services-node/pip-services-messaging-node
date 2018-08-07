@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var MessageEnvelop_1 = require("./MessageEnvelop");
-exports.MessageEnvelop = MessageEnvelop_1.MessageEnvelop;
+var MessageEnvelope_1 = require("./MessageEnvelope");
+exports.MessageEnvelope = MessageEnvelope_1.MessageEnvelope;
 var MessagingCapabilities_1 = require("./MessagingCapabilities");
 exports.MessagingCapabilities = MessagingCapabilities_1.MessagingCapabilities;
 var MessageQueue_1 = require("./MessageQueue");

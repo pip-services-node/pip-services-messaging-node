@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/** @module queues */
 class MessagingCapabilities {
     constructor(canMessageCount, canSend, canReceive, canPeek, canPeekBatch, canRenewLock, canAbandon, canDeadLetter, canClear) {
         this._canMessageCount = canMessageCount;

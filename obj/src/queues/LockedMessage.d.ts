@@ -1,6 +1,7 @@
-import { MessageEnvelop } from './MessageEnvelop';
+/** @module queues */
+import { MessageEnvelope } from './MessageEnvelope';
 export declare class LockedMessage {
-    message: MessageEnvelop;
+    message: MessageEnvelope;
     expirationTime: Date;
     timeout: number;
 }
