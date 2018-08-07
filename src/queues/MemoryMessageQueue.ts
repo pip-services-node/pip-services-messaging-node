@@ -23,7 +23,7 @@ export class MemoryMessageQueue extends MessageQueue {
         this._capabilities = new MessagingCapabilities(true, true, true, true, true, true, true, false, true);
     }
 
-    public isOpened(): boolean {
+    public isOpen(): boolean {
         return this._opened;
     }
 

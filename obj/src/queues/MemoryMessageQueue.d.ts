@@ -10,7 +10,7 @@ export declare class MemoryMessageQueue extends MessageQueue {
     private _opened;
     private _cancel;
     constructor(name?: string);
-    isOpened(): boolean;
+    isOpen(): boolean;
     protected openWithParams(correlationId: string, connection: ConnectionParams, credential: CredentialParams, callback: (err: any) => void): void;
     close(correlationId: string, callback: (err: any) => void): void;
     clear(correlationId: string, callback: (err?: any) => void): void;

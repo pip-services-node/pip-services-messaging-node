@@ -26,7 +26,7 @@ export declare abstract class MessageQueue implements IMessageQueue, IReferencea
     configure(config: ConfigParams): void;
     open(correlationId: string, callback?: (err: any) => void): void;
     protected abstract openWithParams(correlationId: string, connection: ConnectionParams, credential: CredentialParams, callback: (err: any) => void): void;
-    abstract isOpened(): boolean;
+    abstract isOpen(): boolean;
     abstract close(correlationId: string, callback: (err: any) => void): void;
     abstract clear(correlationId: string, callback: (err: any) => void): void;
     abstract readMessageCount(callback: (err: any, count: number) => void): void;
