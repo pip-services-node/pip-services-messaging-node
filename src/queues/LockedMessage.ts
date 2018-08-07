@@ -1,3 +1,4 @@
+/** @module queues */
 import { MessageEnvelop } from './MessageEnvelop';
 
 export class LockedMessage {

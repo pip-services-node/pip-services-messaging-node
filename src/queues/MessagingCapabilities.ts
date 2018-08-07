@@ -1,3 +1,4 @@
+/** @module queues */
 export class MessagingCapabilities {
     private _canMessageCount: boolean;
     private _canSend: boolean;

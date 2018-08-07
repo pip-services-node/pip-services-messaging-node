@@ -1,3 +1,4 @@
+/** @module queues */
 import { IMessageQueue } from './IMessageQueue';
 import { MessageEnvelop } from './MessageEnvelop';
 

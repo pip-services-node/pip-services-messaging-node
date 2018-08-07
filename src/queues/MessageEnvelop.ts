@@ -1,3 +1,4 @@
+/** @module queues */
 import { IdGenerator } from 'pip-services-commons-node';
 
 export class MessageEnvelop {

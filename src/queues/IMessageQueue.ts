@@ -1,3 +1,4 @@
+/** @module queues */
 import { IOpenable } from 'pip-services-commons-node';
 import { IClosable } from 'pip-services-commons-node';
 

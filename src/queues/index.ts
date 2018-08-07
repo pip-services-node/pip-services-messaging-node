@@ -1,3 +1,7 @@
+/** 
+ * @module queues 
+ * @preferred
+ */
 export { IMessageQueue } from './IMessageQueue';
 export { IMessageReceiver } from './IMessageReceiver';
 export { MessageEnvelop } from './MessageEnvelop';
