@@ -67,6 +67,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Allows locking messages in message queues.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -98,19 +105,29 @@
 					<div class="tsd-signature tsd-kind-icon">expiration<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/LockedMessage.ts#L6">queues/LockedMessage.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/LockedMessage.ts#L11">queues/LockedMessage.ts:11</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The time at which the lock expires. Calculated as <code><time when locked> + timeout</code></p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="message" class="tsd-anchor"></a>
 					<h3>message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <a href="queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a></div>
+					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <a href="queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/LockedMessage.ts#L5">queues/LockedMessage.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/LockedMessage.ts#L9">queues/LockedMessage.ts:9</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The message to lock.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="timeout" class="tsd-anchor"></a>
@@ -118,9 +135,14 @@
 					<div class="tsd-signature tsd-kind-icon">timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/LockedMessage.ts#L7">queues/LockedMessage.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/LockedMessage.ts#L13">queues/LockedMessage.ts:13</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The locks timeout.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -165,10 +187,7 @@
 						<a href="queues.memorymessagequeue.html" class="tsd-kind-icon">Memory<wbr>Message<wbr>Queue</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="queues.memorymessagequeuefactory.html" class="tsd-kind-icon">Memory<wbr>Message<wbr>Queue<wbr>Factory</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="queues.messageenvelop.html" class="tsd-kind-icon">Message<wbr>Envelop</a>
+						<a href="queues.messageenvelope.html" class="tsd-kind-icon">Message<wbr>Envelope</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="queues.messagequeue.html" class="tsd-kind-icon">Message<wbr>Queue</a>

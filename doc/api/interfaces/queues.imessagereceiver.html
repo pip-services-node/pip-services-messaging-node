@@ -67,6 +67,14 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Interface for classes that need to be able to receive messages. Message receivers
+						can be listened to by queues and other classes.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -94,25 +102,48 @@
 					<a name="receivemessage" class="tsd-anchor"></a>
 					<h3>receive<wbr>Message</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">receive<wbr>Message<span class="tsd-signature-symbol">(</span>envelop<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a>, queue<span class="tsd-signature-symbol">: </span><a href="queues.imessagequeue.html" class="tsd-signature-type">IMessageQueue</a>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">receive<wbr>Message<span class="tsd-signature-symbol">(</span>envelope<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a>, queue<span class="tsd-signature-symbol">: </span><a href="queues.imessagequeue.html" class="tsd-signature-type">IMessageQueue</a>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageReceiver.ts#L6">queues/IMessageReceiver.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageReceiver.ts#L22">queues/IMessageReceiver.ts:22</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for receiving a message.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="../classes/queues.messageenvelope.html">MessageEnvelope</a></p>
+									</dd>
+									<dt>see</dt>
+									<dd><p><a href="queues.imessagequeue.html">IMessageQueue</a></p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>envelop: <a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a></h5>
+									<h5>envelope: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the message&#39;s envelope</p>
+									</div>
 								</li>
 								<li>
 									<h5>queue: <a href="queues.imessagequeue.html" class="tsd-signature-type">IMessageQueue</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the queue that the message is in.</p>
+									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the function to call once the message has been received.
+										Will be called with an error, if one is raised.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -165,10 +196,7 @@
 						<a href="../classes/queues.memorymessagequeue.html" class="tsd-kind-icon">Memory<wbr>Message<wbr>Queue</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/queues.memorymessagequeuefactory.html" class="tsd-kind-icon">Memory<wbr>Message<wbr>Queue<wbr>Factory</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/queues.messageenvelop.html" class="tsd-kind-icon">Message<wbr>Envelop</a>
+						<a href="../classes/queues.messageenvelope.html" class="tsd-kind-icon">Message<wbr>Envelope</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/queues.messagequeue.html" class="tsd-kind-icon">Message<wbr>Queue</a>

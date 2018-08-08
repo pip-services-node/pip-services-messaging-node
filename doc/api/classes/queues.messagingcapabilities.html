@@ -69,6 +69,9 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Used to define what a message queue is capable of.</p>
+					</div>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -87,20 +90,6 @@
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="queues.messagingcapabilities.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="queues.messagingcapabilities.html#_canabandon" class="tsd-kind-icon">_can<wbr>Abandon</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="queues.messagingcapabilities.html#_canclear" class="tsd-kind-icon">_can<wbr>Clear</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="queues.messagingcapabilities.html#_candeadletter" class="tsd-kind-icon">_can<wbr>Dead<wbr>Letter</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="queues.messagingcapabilities.html#_canmessagecount" class="tsd-kind-icon">_can<wbr>Message<wbr>Count</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="queues.messagingcapabilities.html#_canpeek" class="tsd-kind-icon">_can<wbr>Peek</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="queues.messagingcapabilities.html#_canpeekbatch" class="tsd-kind-icon">_can<wbr>Peek<wbr>Batch</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="queues.messagingcapabilities.html#_canreceive" class="tsd-kind-icon">_can<wbr>Receive</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="queues.messagingcapabilities.html#_canrenewlock" class="tsd-kind-icon">_can<wbr>Renew<wbr>Lock</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="queues.messagingcapabilities.html#_cansend" class="tsd-kind-icon">_can<wbr>Send</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -132,135 +121,89 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L11">queues/MessagingCapabilities.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/MessagingCapabilities.ts#L14">queues/MessagingCapabilities.ts:14</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>canMessageCount: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>whether or not the queue&#39;s amount of messages can be counted.</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>canSend: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>whether or not messages can be sent.</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>canReceive: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>whether or not messages can be received.</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>canPeek: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>whether or not messages can be peeked.</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>canPeekBatch: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>whether or not multiple messages can be peeked at once.</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>canRenewLock: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>whether or not a message&#39;s lock can be renewed.</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>canAbandon: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>whether or not the queue can abandon a message.</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>canDeadLetter: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>whether or not the queue can move messages to a dead letter queue.</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>canClear: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>whether or not the queue can be cleared.</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="queues.messagingcapabilities.html" class="tsd-signature-type">MessagingCapabilities</a></h4>
 						</li>
 					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_canabandon" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _can<wbr>Abandon</h3>
-					<div class="tsd-signature tsd-kind-icon">_can<wbr>Abandon<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L9">queues/MessagingCapabilities.ts:9</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_canclear" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _can<wbr>Clear</h3>
-					<div class="tsd-signature tsd-kind-icon">_can<wbr>Clear<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L11">queues/MessagingCapabilities.ts:11</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_candeadletter" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _can<wbr>Dead<wbr>Letter</h3>
-					<div class="tsd-signature tsd-kind-icon">_can<wbr>Dead<wbr>Letter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L10">queues/MessagingCapabilities.ts:10</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_canmessagecount" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _can<wbr>Message<wbr>Count</h3>
-					<div class="tsd-signature tsd-kind-icon">_can<wbr>Message<wbr>Count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L3">queues/MessagingCapabilities.ts:3</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_canpeek" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _can<wbr>Peek</h3>
-					<div class="tsd-signature tsd-kind-icon">_can<wbr>Peek<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L6">queues/MessagingCapabilities.ts:6</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_canpeekbatch" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _can<wbr>Peek<wbr>Batch</h3>
-					<div class="tsd-signature tsd-kind-icon">_can<wbr>Peek<wbr>Batch<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L7">queues/MessagingCapabilities.ts:7</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_canreceive" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _can<wbr>Receive</h3>
-					<div class="tsd-signature tsd-kind-icon">_can<wbr>Receive<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L5">queues/MessagingCapabilities.ts:5</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_canrenewlock" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _can<wbr>Renew<wbr>Lock</h3>
-					<div class="tsd-signature tsd-kind-icon">_can<wbr>Renew<wbr>Lock<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L8">queues/MessagingCapabilities.ts:8</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_cansend" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _can<wbr>Send</h3>
-					<div class="tsd-signature tsd-kind-icon">_can<wbr>Send<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L4">queues/MessagingCapabilities.ts:4</a></li>
-						</ul>
-					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -275,9 +218,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L33">queues/MessagingCapabilities.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/MessagingCapabilities.ts#L55">queues/MessagingCapabilities.ts:55</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether or not the queue can abandon a message.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
@@ -292,9 +240,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L35">queues/MessagingCapabilities.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/MessagingCapabilities.ts#L59">queues/MessagingCapabilities.ts:59</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether or not the queue can be cleared.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
@@ -309,9 +262,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L34">queues/MessagingCapabilities.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/MessagingCapabilities.ts#L57">queues/MessagingCapabilities.ts:57</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether or not the queue can move messages to a dead letter queue.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
@@ -326,9 +284,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L27">queues/MessagingCapabilities.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/MessagingCapabilities.ts#L43">queues/MessagingCapabilities.ts:43</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether or not the queue&#39;s amount of messages can be counted.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
@@ -343,9 +306,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L30">queues/MessagingCapabilities.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/MessagingCapabilities.ts#L49">queues/MessagingCapabilities.ts:49</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether or not messages can be peeked.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
@@ -360,9 +328,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L31">queues/MessagingCapabilities.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/MessagingCapabilities.ts#L51">queues/MessagingCapabilities.ts:51</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether or not multiple messages can be peeked at once.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
@@ -377,9 +350,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L29">queues/MessagingCapabilities.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/MessagingCapabilities.ts#L47">queues/MessagingCapabilities.ts:47</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether or not messages can be received.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
@@ -394,9 +372,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L32">queues/MessagingCapabilities.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/MessagingCapabilities.ts#L53">queues/MessagingCapabilities.ts:53</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether or not a message&#39;s lock can be renewed.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
@@ -411,9 +394,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/MessagingCapabilities.ts#L28">queues/MessagingCapabilities.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/MessagingCapabilities.ts#L45">queues/MessagingCapabilities.ts:45</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether or not messages can be sent.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
@@ -446,10 +434,7 @@
 						<a href="queues.memorymessagequeue.html" class="tsd-kind-icon">Memory<wbr>Message<wbr>Queue</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="queues.memorymessagequeuefactory.html" class="tsd-kind-icon">Memory<wbr>Message<wbr>Queue<wbr>Factory</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="queues.messageenvelop.html" class="tsd-kind-icon">Message<wbr>Envelop</a>
+						<a href="queues.messageenvelope.html" class="tsd-kind-icon">Message<wbr>Envelope</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="queues.messagequeue.html" class="tsd-kind-icon">Message<wbr>Queue</a>
@@ -461,33 +446,6 @@
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="queues.messagingcapabilities.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="queues.messagingcapabilities.html#_canabandon" class="tsd-kind-icon">_can<wbr>Abandon</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="queues.messagingcapabilities.html#_canclear" class="tsd-kind-icon">_can<wbr>Clear</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="queues.messagingcapabilities.html#_candeadletter" class="tsd-kind-icon">_can<wbr>Dead<wbr>Letter</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="queues.messagingcapabilities.html#_canmessagecount" class="tsd-kind-icon">_can<wbr>Message<wbr>Count</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="queues.messagingcapabilities.html#_canpeek" class="tsd-kind-icon">_can<wbr>Peek</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="queues.messagingcapabilities.html#_canpeekbatch" class="tsd-kind-icon">_can<wbr>Peek<wbr>Batch</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="queues.messagingcapabilities.html#_canreceive" class="tsd-kind-icon">_can<wbr>Receive</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="queues.messagingcapabilities.html#_canrenewlock" class="tsd-kind-icon">_can<wbr>Renew<wbr>Lock</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="queues.messagingcapabilities.html#_cansend" class="tsd-kind-icon">_can<wbr>Send</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="queues.messagingcapabilities.html#canabandon" class="tsd-kind-icon">can<wbr>Abandon</a>

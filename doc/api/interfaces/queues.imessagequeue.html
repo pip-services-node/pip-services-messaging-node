@@ -67,6 +67,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Interface for classes that need to be able to manage a queue of messages.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -126,22 +133,35 @@
 					<a name="abandon" class="tsd-anchor"></a>
 					<h3>abandon</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">abandon<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">abandon<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L23">queues/IMessageQueue.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L120">queues/IMessageQueue.ts:120</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for abandoning the processing of a
+									locked message and removing its lock.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>message: <a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a></h5>
+									<h5>message: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the message to abandon.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) the function to call once the message has been abandoned.
+										Will be called with an error if one is raised.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -176,16 +196,35 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L27">queues/IMessageQueue.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L152">queues/IMessageQueue.ts:152</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic starting the <a href="queues.imessagequeue.html#listen">listening</a> process.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="queues.imessagequeue.html#listen">listen</a></p>
+									</dd>
+									<dt>see</dt>
+									<dd><p><a href="queues.imessagereceiver.html">IMessageReceiver</a></p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5>receiver: <a href="queues.imessagereceiver.html" class="tsd-signature-type">IMessageReceiver</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the message receiver to pass the received message(s) to.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -255,22 +294,35 @@
 					<a name="complete" class="tsd-anchor"></a>
 					<h3>complete</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">complete<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">complete<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L22">queues/IMessageQueue.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L111">queues/IMessageQueue.ts:111</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for completing the
+									processing of a locked message and removing its lock.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>message: <a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a></h5>
+									<h5>message: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the message to complete.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) the function to call once the message has been completed.
+										Will be called with an error if one is raised.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -305,13 +357,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L28">queues/IMessageQueue.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L158">queues/IMessageQueue.ts:158</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for stopping this queue&#39;s listening process.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -328,10 +388,22 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L11">queues/IMessageQueue.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L27">queues/IMessageQueue.ts:27</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for retrieving the queue&#39;s
+									messaging capabilities.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="../classes/queues.messagingcapabilities.html">MessagingCapabilities</a></p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/queues.messagingcapabilities.html" class="tsd-signature-type">MessagingCapabilities</a></h4>
+							<p>the queue&#39;s capabilities.</p>
 						</li>
 					</ul>
 				</section>
@@ -345,10 +417,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L10">queues/IMessageQueue.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L18">queues/IMessageQueue.ts:18</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for retrieving the queue&#39;s name.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>the queue&#39;s name.</p>
 						</li>
 					</ul>
 				</section>
@@ -387,16 +465,36 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L26">queues/IMessageQueue.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L142">queues/IMessageQueue.ts:142</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will listen to the queue and, if a message is <a href="queues.imessagequeue.html#receive">received</a>,
+									will pass it to the given message receiver for processing.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="queues.imessagereceiver.html">IMessageReceiver</a></p>
+									</dd>
+									<dt>see</dt>
+									<dd><p><a href="queues.imessagequeue.html#receive">receive</a></p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5>receiver: <a href="queues.imessagereceiver.html" class="tsd-signature-type">IMessageReceiver</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the message receiver to pass the received message(s) to.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -407,22 +505,35 @@
 					<a name="movetodeadletter" class="tsd-anchor"></a>
 					<h3>move<wbr>ToDead<wbr>Letter</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">move<wbr>ToDead<wbr>Letter<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">move<wbr>ToDead<wbr>Letter<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L24">queues/IMessageQueue.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L129">queues/IMessageQueue.ts:129</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for moving a locked message to the dead
+									letter queue.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>message: <a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a></h5>
+									<h5>message: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the dead letter.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) the function to call once the message has been moved.
+										Will be called with an error if one is raised.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -515,20 +626,33 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L17">queues/IMessageQueue.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L71">queues/IMessageQueue.ts:71</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for retrieving the next message without removing
+									it from the queue.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the function to call with the peeked message
+										(or with an error, if one is raised).</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, result<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, result<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -538,7 +662,7 @@
 															<h5>err: <span class="tsd-signature-type">any</span></h5>
 														</li>
 														<li>
-															<h5>result: <a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a></h5>
+															<h5>result: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -562,23 +686,39 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L18">queues/IMessageQueue.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L81">queues/IMessageQueue.ts:81</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for retrieving a batch of messages without
+									removing them from the queue.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5>messageCount: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the number of message to peek.</p>
+									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the function to call with the peeked messages
+										(or with an error, if one is raised).</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, result<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, result<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -588,7 +728,7 @@
 															<h5>err: <span class="tsd-signature-type">any</span></h5>
 														</li>
 														<li>
-															<h5>result: <a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a><span class="tsd-signature-symbol">[]</span></h5>
+															<h5>result: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a><span class="tsd-signature-symbol">[]</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -612,13 +752,23 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L13">queues/IMessageQueue.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L36">queues/IMessageQueue.ts:36</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for establishing the amount of
+									messages currently in the queue.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the function to call with the number of messages in the queue
+										(or with an error, if one is rasied).</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -656,23 +806,40 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L19">queues/IMessageQueue.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L92">queues/IMessageQueue.ts:92</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will wait the given amount of time for a message to arrive in
+										the queue (if it is empty) and, once one arrives, will remove it from the queue and lock it
+									for processing. If the queue already contains messages then the next one will be received.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5>waitTimeout: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the amount of time to wait for a message to arrive.</p>
+									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the function to call with the received message
+										(or with an error, if one is raised).</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, result<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, result<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -682,7 +849,7 @@
 															<h5>err: <span class="tsd-signature-type">any</span></h5>
 														</li>
 														<li>
-															<h5>result: <a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a></h5>
+															<h5>result: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -700,25 +867,40 @@
 					<a name="renewlock" class="tsd-anchor"></a>
 					<h3>renew<wbr>Lock</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">renew<wbr>Lock<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a>, lockTimeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">renew<wbr>Lock<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a>, lockTimeout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L21">queues/IMessageQueue.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L102">queues/IMessageQueue.ts:102</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for renewing the given message&#39;s lock.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>message: <a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a></h5>
+									<h5>message: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the message to renew a lock for.</p>
+									</div>
 								</li>
 								<li>
 									<h5>lockTimeout: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the lock&#39;s new timeout.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) the function to call once the lock has been renewed.
+										Will be called with an error if one is raised.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -747,25 +929,45 @@
 					<a name="send" class="tsd-anchor"></a>
 					<h3>send</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">send<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, envelop<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">send<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, envelope<span class="tsd-signature-symbol">: </span><a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L15">queues/IMessageQueue.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L49">queues/IMessageQueue.ts:49</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for sending a <a href="../classes/queues.messageenvelope.html">MessageEnvelope</a>.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="../classes/queues.messageenvelope.html">MessageEnvelope</a></p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
-									<h5>envelop: <a href="../classes/queues.messageenvelop.html" class="tsd-signature-type">MessageEnvelop</a></h5>
+									<h5>envelope: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the MessageEnvelope to send.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) the function to call once sending is complete.
+										Will be called with an error if one is raised.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -800,22 +1002,46 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5053d6d/src/queues/IMessageQueue.ts#L16">queues/IMessageQueue.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/72dc086/src/queues/IMessageQueue.ts#L62">queues/IMessageQueue.ts:62</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Abstract method that will contain the logic for sending an object as a message.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="../classes/queues.messageenvelope.html">MessageEnvelope</a></p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>unique business transaction id to trace calls across components.</p>
+									</div>
 								</li>
 								<li>
 									<h5>messageType: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the message&#39;s type. Will used when converting the message to a
+										MessageEnvelope.</p>
+									</div>
 								</li>
 								<li>
 									<h5>message: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the message to send.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>(optional) the function to call once sending is complete.
+										Will be called with an error if one is raised.</p>
+									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
@@ -868,10 +1094,7 @@
 						<a href="../classes/queues.memorymessagequeue.html" class="tsd-kind-icon">Memory<wbr>Message<wbr>Queue</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/queues.memorymessagequeuefactory.html" class="tsd-kind-icon">Memory<wbr>Message<wbr>Queue<wbr>Factory</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/queues.messageenvelop.html" class="tsd-kind-icon">Message<wbr>Envelop</a>
+						<a href="../classes/queues.messageenvelope.html" class="tsd-kind-icon">Message<wbr>Envelope</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="../classes/queues.messagequeue.html" class="tsd-kind-icon">Message<wbr>Queue</a>
