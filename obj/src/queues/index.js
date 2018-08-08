@@ -8,6 +8,4 @@ var MessageQueue_1 = require("./MessageQueue");
 exports.MessageQueue = MessageQueue_1.MessageQueue;
 var MemoryMessageQueue_1 = require("./MemoryMessageQueue");
 exports.MemoryMessageQueue = MemoryMessageQueue_1.MemoryMessageQueue;
-var MemoryMessageQueueFactory_1 = require("./MemoryMessageQueueFactory");
-exports.MemoryMessageQueueFactory = MemoryMessageQueueFactory_1.MemoryMessageQueueFactory;
 //# sourceMappingURL=index.js.map
