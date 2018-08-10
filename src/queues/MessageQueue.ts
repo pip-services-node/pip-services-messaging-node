@@ -29,6 +29,11 @@ import { MessageEnvelope } from './MessageEnvelope';
  * - the connection resolver's connections ("connection(s)" section);
  * - the credential resolver's credentials ("credential(s)" section).
  * 
+ * A MessageQueue can reference a logger, counters, a connection resolver, and a credential resolver.
+ * These references can be set passing the corresponding "logger", "counters", "discovery" (for the 
+ * connection resolver), and "credential-store" (for the credential resolver) references to the object's 
+ * [[setReferences]] method.
+ * 
  * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/log.compositelogger.html CompositeLogger]] (in the PipServices "Components" package)
  * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/count.compositecounters.html CompositeCounters]] (in the PipServices "Components" package)
  * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/connect.connectionresolver.html ConnectionResolver]] (in the PipServices "Components" package)
@@ -71,10 +76,11 @@ export abstract class MessageQueue implements IMessageQueue, IReferenceable, ICo
      * Sets references to this queue's logger, counters, connection resolver, 
      * and credential resolver.
      * 
-     * @param references    an IReferences object, containing "logger" and "counters" references, 
-     *                      as well as the references to set for the connection and credential resolvers.
+     * @param references    an IReferences object, containing references to a "logger", "counters", 
+     *                      a "discovery" service (for the connection resolver), and a "credential-store" 
+     *                      (for the credential resolver).
      * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]]
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]] (in the PipServices "Commons" package)
      */
     public setReferences(references: IReferences): void {
         this._logger.setReferences(references);
@@ -92,7 +98,7 @@ export abstract class MessageQueue implements IMessageQueue, IReferenceable, ICo
      * 
      * @param config    the configuration parameters to configure this queue with.
      * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]]
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
      */
     public configure(config: ConfigParams): void {
         this._name = NameResolver.resolve(config, this._name);

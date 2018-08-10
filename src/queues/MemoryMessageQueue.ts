@@ -15,6 +15,17 @@ import { LockedMessage } from './LockedMessage';
  * In-memory implementation of the abstract [[MessageQueue]] class. Capable of performing all queue actions, 
  * with the exception of moving messages to a dead letter queue.
  * 
+ * MessageQueues can be configured using the [[configure]] method, which searches for and sets:
+ * - the queue's name as the configuration's name ("name", "id", or "descriptor" parameters);
+ * - the logger's log-level and source ("level" and "source" parameters);
+ * - the connection resolver's connections ("connection(s)" section);
+ * - the credential resolver's credentials ("credential(s)" section).
+ * 
+ * A MessageQueue can reference a logger, counters, a connection resolver, and a credential resolver.
+ * These references can be set passing the corresponding "logger", "counters", "discovery" (for the 
+ * connection resolver), and "credential-store" (for the credential resolver) references to the object's 
+ * [[setReferences]] method.
+ * 
  * @see [[MessageQueue]]
  * @see [[MessagingCapabilities]]
  */
