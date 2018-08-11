@@ -23,16 +23,36 @@ import { MessageEnvelope } from './MessageEnvelope';
  * Abstract class for creating message queues that support logging, connection establishment, 
  * and performance counters. 
  * 
- * MessageQueues can be configured using the [[configure]] method, which searches for and sets:
- * - the queue's name as the configuration's name ("name", "id", or "descriptor" parameters);
- * - the logger's log-level and source ("level" and "source" parameters);
- * - the connection resolver's connections ("connection(s)" section);
- * - the credential resolver's credentials ("credential(s)" section).
+ * ### Configuration parameters ###
  * 
- * A MessageQueue can reference a logger, counters, a connection resolver, and a credential resolver.
- * These references can be set passing the corresponding "logger", "counters", "discovery" (for the 
- * connection resolver), and "credential-store" (for the credential resolver) references to the object's 
- * [[setReferences]] method.
+ * Parameters to pass to the [[configure]] method for component configuration:
+ *      
+ * - "name"/"id"/"descriptor" - the queue's name as the configuration's name;
+ * - "level" - the logger's log-level;
+ * - "source" - the logger's source;
+ * - __connection(s)__
+ *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
+ *     - "connection.protocol" - the connection's protocol;
+ *     - "connection.host" - the target host;
+ *     - "connection.port" - the target port;
+ *     - "connection.uri" - the target URI.
+ * - __credential(s)__
+ *     - "credential.username" - the username to use for authentication;
+ *     - "credential.password" - the password;
+ *     - "credential.store_key" - the key to use in the credential store;
+ *     - "credential.access_id" - the access ID to use;
+ *     - "credential.access_key" - the access key to use;
+ * 
+ * 
+ * ### References ###
+ * 
+ * A logger, counters, a connection resolver, and a credential resolver can be referenced by passing the 
+ * following references to the object's [[setReferences]] method:
+ * 
+ * - logger: <code>"\*:logger:\*:\*:1.0"</code>
+ * - counters: <code>"\*:counters:\*:\*:1.0"</code>
+ * - discovery: <code>"\*:discovery:\*:\*:1.0"</code> (for the connection resolver), 
+ * - credential store: <code>"\*:credential-store:\*:\*:1.0"</code> (for the credential resolver) 
  * 
  * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/log.compositelogger.html CompositeLogger]] (in the PipServices "Components" package)
  * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/count.compositecounters.html CompositeCounters]] (in the PipServices "Components" package)
@@ -76,9 +96,14 @@ export abstract class MessageQueue implements IMessageQueue, IReferenceable, ICo
      * Sets references to this queue's logger, counters, connection resolver, 
      * and credential resolver.
      * 
-     * @param references    an IReferences object, containing references to a "logger", "counters", 
-     *                      a "discovery" service (for the connection resolver), and a "credential-store" 
-     *                      (for the credential resolver).
+     * __References:__
+     * - logger: <code>"\*:logger:\*:\*:1.0"</code>
+     * - counters: <code>"\*:counters:\*:\*:1.0"</code>
+     * - discovery: <code>"\*:discovery:\*:\*:1.0"</code> (for the connection resolver), 
+     * - credential store: <code>"\*:credential-store:\*:\*:1.0"</code> (for the credential resolver) 
+     *
+     * @param references    an IReferences object, containing references to a logger, counters, 
+     *                      a connection resolver, and a credential resolver.
      * 
      * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]] (in the PipServices "Commons" package)
      */
@@ -90,11 +115,24 @@ export abstract class MessageQueue implements IMessageQueue, IReferenceable, ICo
     }
 
     /**
-     * Configures this queue by searching for and setting:
-     * - the queue's name as the configuration's name ("name", "id", or "descriptor" parameters);
-     * - the logger's log-level and source ("level" and "source" parameters);
-     * - the connection resolver's connections ("connection(s)" section);
-     * - the credential resolver's credentials ("credential(s)" section).
+     * Configures this queue using the given configuration parameters.
+     * 
+     * __Configuration parameters:__
+     * - "name"/"id"/"descriptor" - the queue's name as the configuration's name;
+     * - "level" - the logger's log-level;
+     * - "source" - the logger's source;
+     * - __connection(s)__
+     *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
+     *     - "connection.protocol" - the connection's protocol;
+     *     - "connection.host" - the target host;
+     *     - "connection.port" - the target port;
+     *     - "connection.uri" - the target URI.
+     * - __credential(s)__
+     *     - "credential.username" - the username to use for authentication;
+     *     - "credential.password" - the password;
+     *     - "credential.store_key" - the key to use in the credential store;
+     *     - "credential.access_id" - the access ID to use;
+     *     - "credential.access_key" - the access key to use;
      * 
      * @param config    the configuration parameters to configure this queue with.
      * 
