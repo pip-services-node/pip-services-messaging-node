@@ -20,123 +20,67 @@ import { MessagingCapabilities } from './MessagingCapabilities';
 import { MessageEnvelope } from './MessageEnvelope';
 
 /**
- * Abstract class for creating message queues that support logging, connection establishment, 
- * and performance counters. 
+ * Abstract message queue that is used as a basis for specific message queue implementations.
  * 
  * ### Configuration parameters ###
  * 
- * Parameters to pass to the [[configure]] method for component configuration:
- *      
- * - "name"/"id"/"descriptor" - the queue's name as the configuration's name;
- * - "level" - the logger's log-level;
- * - "source" - the logger's source;
- * - __connection(s)__
- *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
- *     - "connection.protocol" - the connection's protocol;
- *     - "connection.host" - the target host;
- *     - "connection.port" - the target port;
- *     - "connection.uri" - the target URI.
- * - __credential(s)__
- *     - "credential.username" - the username to use for authentication;
- *     - "credential.password" - the password;
- *     - "credential.store_key" - the key to use in the credential store;
- *     - "credential.access_id" - the access ID to use;
- *     - "credential.access_key" - the access key to use;
- * 
+ * name:                        name of the message queue
+ * connection(s):
+ *   discovery_key:             key to retrieve parameters from discovery service
+ *   protocol:                  connection protocol like http, https, tcp, udp
+ *   host:                      host name or IP address
+ *   port:                      port number
+ *   uri:                       resource URI or connection string with all parameters in it
+ * credential(s):
+ *   store_key:                 key to retrieve parameters from credential store
+ *   username:                  user name
+ *   password:                  user password
+ *   access_id:                 application access id
+ *   access_key:                application secret key
  * 
  * ### References ###
  * 
- * A logger, counters, a connection resolver, and a credential resolver can be referenced by passing the 
- * following references to the object's [[setReferences]] method:
- * 
- * - logger: <code>"\*:logger:\*:\*:1.0"</code>
- * - counters: <code>"\*:counters:\*:\*:1.0"</code>
- * - discovery: <code>"\*:discovery:\*:\*:1.0"</code> (for the connection resolver), 
- * - credential store: <code>"\*:credential-store:\*:\*:1.0"</code> (for the credential resolver) 
- * 
- * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/log.compositelogger.html CompositeLogger]] (in the PipServices "Components" package)
- * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/count.compositecounters.html CompositeCounters]] (in the PipServices "Components" package)
- * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/connect.connectionresolver.html ConnectionResolver]] (in the PipServices "Components" package)
- * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/auth.credentialresolver.html CredentialResolver]] (in the PipServices "Components" package)
+ * - *:logger:*:*:1.0           (optional) ILogger components to pass log messages
+ * - *:counters:*:*:1.0         (optional) ICounters components to pass collected measurements
+ * - *:discovery:*:*:1.0        (optional) IDiscovery components to discover connection(s)
+ * - *:credential-store:*:*:1.0 (optional) ICredentialStore componetns to lookup credential(s)
  */
 export abstract class MessageQueue implements IMessageQueue, IReferenceable, IConfigurable {
-    /** The [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/log.compositelogger.html CompositeLogger]] to log with. */
     protected _logger: CompositeLogger = new CompositeLogger();
-    /** The [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/count.compositecounters.html CompositeCounters]] to count performance parameters with. */
     protected _counters: CompositeCounters = new CompositeCounters();
-    /** The [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/connect.connectionresolver.html ConnectionResolver]] to establish connections with. */
     protected _connectionResolver: ConnectionResolver = new ConnectionResolver();
-    /** The [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/auth.credentialresolver.html CredentialResolver]] to authenticate connections with. */
     protected _credentialResolver: CredentialResolver = new CredentialResolver();
 
-    /** The queue's name. */
     protected _name: string;
-    /** The queue's [[MessagingCapabilities messaging capabilities]]. */
     protected _capabilities: MessagingCapabilities;
 
     /**
-     * Creates a new MessageQueue.
+     * Creates a new instance of the message queue.
      * 
-     * @param name  the name to give to the queue.
+     * @param name  (optional) a queue name
      */
 	public constructor(name?: string) {
         this._name = name;
 	}
     
     /**
-     * @returns the queue's name.
+     * Gets the queue name
+     * 
+     * @returns the queue name.
      */
     public getName(): string { return this._name; }
+
     /**
-     * @returns the queue's [[MessagingCapabilities messaging capabilities]].
+     * Gets the queue capabilities
+     * 
+     * @returns the queue's capabilities object.
      */
     public getCapabilities(): MessagingCapabilities { return this._capabilities; }
 
     /**
-     * Sets references to this queue's logger, counters, connection resolver, 
-     * and credential resolver.
+     * Configures component by passing configuration parameters.
      * 
-     * __References:__
-     * - logger: <code>"\*:logger:\*:\*:1.0"</code>
-     * - counters: <code>"\*:counters:\*:\*:1.0"</code>
-     * - discovery: <code>"\*:discovery:\*:\*:1.0"</code> (for the connection resolver), 
-     * - credential store: <code>"\*:credential-store:\*:\*:1.0"</code> (for the credential resolver) 
-     *
-     * @param references    an IReferences object, containing references to a logger, counters, 
-     *                      a connection resolver, and a credential resolver.
-     * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]] (in the PipServices "Commons" package)
-     */
-    public setReferences(references: IReferences): void {
-        this._logger.setReferences(references);
-        this._counters.setReferences(references);
-        this._connectionResolver.setReferences(references);
-        this._credentialResolver.setReferences(references);
-    }
-
-    /**
-     * Configures this queue using the given configuration parameters.
-     * 
-     * __Configuration parameters:__
-     * - "name"/"id"/"descriptor" - the queue's name as the configuration's name;
-     * - "level" - the logger's log-level;
-     * - "source" - the logger's source;
-     * - __connection(s)__
-     *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
-     *     - "connection.protocol" - the connection's protocol;
-     *     - "connection.host" - the target host;
-     *     - "connection.port" - the target port;
-     *     - "connection.uri" - the target URI.
-     * - __credential(s)__
-     *     - "credential.username" - the username to use for authentication;
-     *     - "credential.password" - the password;
-     *     - "credential.store_key" - the key to use in the credential store;
-     *     - "credential.access_id" - the access ID to use;
-     *     - "credential.access_key" - the access key to use;
-     * 
-     * @param config    the configuration parameters to configure this queue with.
-     * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
+     * @param config    configuration parameters to be set.
      */
     public configure(config: ConfigParams): void {
         this._name = NameResolver.resolve(config, this._name);
@@ -146,12 +90,29 @@ export abstract class MessageQueue implements IMessageQueue, IReferenceable, ICo
     }
 
     /**
-     * Opens a connection for message transferring using the connection and credential parameters 
-     * resolved by the corresponding resolvers.
-     * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param callback          (optional) the function to call once the connection has been opened.
-     *                          Will be called with an error, if one is raised.
+	 * Sets references to dependent components.
+	 * 
+	 * @param references 	references to locate the component dependencies. 
+     */
+    public setReferences(references: IReferences): void {
+        this._logger.setReferences(references);
+        this._counters.setReferences(references);
+        this._connectionResolver.setReferences(references);
+        this._credentialResolver.setReferences(references);
+    }
+
+    /**
+	 * Checks if the component is opened.
+	 * 
+	 * @returns true if the component has been opened and false otherwise.
+     */
+    public abstract isOpen(): boolean;
+
+    /**
+	 * Opens the component.
+	 * 
+	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
      */
     public open(correlationId: string, callback?: (err: any) => void): void {
         let connection: ConnectionParams;
@@ -176,71 +137,58 @@ export abstract class MessageQueue implements IMessageQueue, IReferenceable, ICo
     }
 
     /**
-     * Abstract method that will contain the logic for opening a connection using the provided 
-     * connection and credential parameters.
+     * Opens the component with given connection and credential parameters.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param connection        the parameters of the connection.
-     * @param credential        the credentials to use for authentication.
-     * @param callback          the function to call once the connection has been opened.
-     *                          Will be called with an error if one is raised.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param connection        connection parameters
+     * @param credential        credential parameters
+     * @param callback 			callback function that receives error or null no errors occured.
      */
-    protected abstract openWithParams(correlationId: string, connection: ConnectionParams, credential: CredentialParams, callback: (err: any) => void): void;
+    protected abstract openWithParams(correlationId: string,
+        connection: ConnectionParams, credential: CredentialParams,
+        callback: (err: any) => void): void;
 
     /**
-     * Abstract method that will contain the logic for determining whether or not the 
-     * queue's connection is currently open.
-     */
-    public abstract isOpen(): boolean;
-    /**
-     * Abstract method that will contain the logic for closing the queue's connection.
-     * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param callback          the function to call once the connection has been closed.
-     *                          Will be called with an error if one is raised.
+	 * Closes component and frees used resources.
+	 * 
+	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
      */
     public abstract close(correlationId: string, callback: (err: any) => void): void;
+
     /**
-     * Abstract method that will contain the logic for clearing the queue.
-     * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param callback          the function to call once the queue has been cleared.
-     *                          Will be called with an error if one is raised.
+	 * Clears component state.
+	 * 
+	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
      */
     public abstract clear(correlationId: string, callback: (err: any) => void): void;
 
     /**
-     * Abstract method that will contain the logic for establishing the amount of 
-     * messages currently in the queue.
+     * Reads the current number of messages in the queue to be delivered.
      * 
-     * @param callback      the function to call with the number of messages in the queue 
-     *                      (or with an error, if one is rasied).
+     * @param callback      callback function that receives number of messages or error.
      */
     public abstract readMessageCount(callback: (err: any, count: number) => void): void;
 
-    //TODO: sent over the connection or to the queue?
     /**
-     * Abstract method that will contain the logic for sending a [[MessageEnvelope]].
+     * Sends a message into the queue.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param envelope          the MessageEnvelope to send.
-     * @param callback          (optional) the function to call once sending is complete.
-     *                          Will be called with an error if one is raised.
-     * 
-     * @see [[MessageEnvelope]]
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param envelope          a message envelop to be sent.
+     * @param callback          (optional) callback function that receives error or null for success.
      */
     public abstract send(correlationId: string, envelope: MessageEnvelope, callback?: (err: any) => void): void;
+
     /**
-     * Send the object passed as the message.
+     * Sends an object into the queue.
+     * Before sending the object is converted into JSON string and wrapped in a [[MessageEnvelop]].
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param messageType       the message's type. Will used when converting the message to a
-     *                          MessageEnvelope.
-     * @param message           the message to send.
-     * @param callback          (optional) the function to call once sending is complete.
-     *                          Will be called with an error if one is raised.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param messageType       a message type
+     * @param value             an object value to be sent
+     * @param callback          (optional) callback function that receives error or null for success.
      * 
-     * @see [[MessageEnvelope]]
      * @see [[send]]
      */
     public sendAsObject(correlationId: string, messageType: string, message: any, callback?: (err: any) => void): void {
@@ -249,96 +197,95 @@ export abstract class MessageQueue implements IMessageQueue, IReferenceable, ICo
     }
 
     /**
-     * Abstract method that will contain the logic for retrieving the next message without removing 
-     * it from the queue.
+     * Peeks a single incoming message from the queue without removing it.
+     * If there are no messages available in the queue it returns null.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param callback          the function to call with the peeked message 
-     *                          (or with an error, if one is raised).
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param callback          callback function that receives a message or error.
      */
     public abstract peek(correlationId: string, callback: (err: any, result: MessageEnvelope) => void): void;
+
     /**
-     * Abstract method that will contain the logic for retrieving a batch of messages without 
-     * removing them from the queue.
+     * Peeks multiple incoming messages from the queue without removing them.
+     * If there are no messages available in the queue it returns an empty list.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param messageCount      the number of message to peek.
-     * @param callback          the function to call with the peeked messages 
-     *                          (or with an error, if one is raised).
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param messageCount      a maximum number of messages to peek.
+     * @param callback          callback function that receives a list with messages or error.
      */
     public abstract peekBatch(correlationId: string, messageCount: number, callback: (err: any, result: MessageEnvelope[]) => void): void;
+
     /**
-     * Abstract method that will wait the given amount of time for a message to arrive in 
-     * the queue (if it is empty) and, once one arrives, will remove it from the queue and lock it 
-     * for processing. If the queue already contains messages then the next one will be received.
+     * Receives an incoming message and removes it from the queue.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param waitTimeout       the amount of time to wait for a message to arrive.
-     * @param callback          the function to call with the received message 
-     *                          (or with an error, if one is raised).
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param waitTimeout       a timeout in milliseconds to wait for a message to come.
+     * @param callback          callback function that receives a message or error.
      */
     public abstract receive(correlationId: string, waitTimeout: number, callback: (err: any, result: MessageEnvelope) => void): void;
 
     /**
-     * Abstract method that will contain the logic for renewing the given message's lock.
+     * Renews a lock on a message that makes it invisible from other receivers in the queue.
+     * This method is usually used to extend the message processing time.
      * 
-     * @param message       the message to renew a lock for.
-     * @param lockTimeout   the lock's new timeout.
-     * @param callback      (optional) the function to call once the lock has been renewed.
-     *                      Will be called with an error if one is raised.
+     * @param message       a message to extend its lock.
+     * @param lockTimeout   a locking timeout in milliseconds.
+     * @param callback      (optional) callback function that receives an error or null for success.
      */
     public abstract renewLock(message: MessageEnvelope, lockTimeout: number, callback?: (err: any) => void): void;
+
     /**
-     * Abstract method that will contain the logic for completing the processing of a 
-     * locked message and removing its lock.
+     * Permanently removes a message from the queue.
+     * This method is usually used to remove the message after successful processing.
      * 
-     * @param message   the message to complete.
-     * @param callback  (optional) the function to call once the message has been completed.
-     *                  Will be called with an error if one is raised.
+     * @param message   a message to remove.
+     * @param callback  (optional) callback function that receives an error or null for success.
      */
     public abstract complete(message: MessageEnvelope, callback?: (err: any) => void): void;
+
     /**
-     * Abstract method that will contain the logic for abandoning the processing of a 
-     * locked message and removing its lock.
+     * Returnes message into the queue and makes it available for all subscribers to receive it again.
+     * This method is usually used to return a message which could not be processed at the moment
+     * to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently
+     * or/and send to dead letter queue.
      * 
-     * @param message   the message to abandon.
-     * @param callback  (optional) the function to call once the message has been abandoned.
-     *                  Will be called with an error if one is raised.
+     * @param message   a message to return.
+     * @param callback  (optional) callback function that receives an error or null for success.
      */
     public abstract abandon(message: MessageEnvelope, callback?: (err: any) => void): void;
+
     /**
-     * Abstract method that will contain the logic for moving a locked message to the dead 
-     * letter queue.
+     * Permanently removes a message from the queue and sends it to dead letter queue.
      * 
-     * @param message   the dead letter.
-     * @param callback  (optional) the function to call once the message has been moved.
-     *                  Will be called with an error if one is raised.
+     * @param message   a message to be removed.
+     * @param callback  (optional) callback function that receives an error or null for success.
      */
     public abstract moveToDeadLetter(message: MessageEnvelope, callback?: (err: any) => void): void;
 
     /**
-     * Abstract method that will listen to the queue and, if a message is [[receive received]], 
-     * will pass it to the given message receiver for processing.
+     * Listens for incoming messages and blocks the current thread until queue is closed.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param receiver          the message receiver to pass the received message(s) to.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param receiver          a receiver to receive incoming messages.
      * 
      * @see [[IMessageReceiver]]
      * @see [[receive]]
      */
     public abstract listen(correlationId: string, receiver: IMessageReceiver): void;
+
     /**
-     * Abstract method that will contain the logic for stopping this queue's listening process.
+     * Ends listening for incoming messages.
+     * When this method is call [[listen]] unblocks the thread and execution continues.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      */
     public abstract endListen(correlationId: string): void;
 
     /**
-     * Starts the [[listen listening]] process.
+     * Listens for incoming messages without blocking the current thread.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param receiver          the message receiver to pass the received message(s) to.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param receiver          a receiver to receive incoming messages.
      * 
      * @see [[listen]]
      * @see [[IMessageReceiver]]
@@ -350,7 +297,9 @@ export abstract class MessageQueue implements IMessageQueue, IReferenceable, ICo
     }
 
     /**
-     * @returns this queues name in the following format: "[<name>]".
+     * Gets a string representation of the object.
+     * 
+     * @returns a string representation of the object.
      */
     public toString(): string {
         return "[" + this.getName() + "]";

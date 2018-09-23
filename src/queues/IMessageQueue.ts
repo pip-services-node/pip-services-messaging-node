@@ -7,153 +7,152 @@ import { MessageEnvelope } from './MessageEnvelope';
 import { IMessageReceiver } from './IMessageReceiver';
 
 /**
- * Interface for classes that need to be able to manage a queue of messages.
+ * Interface for asynchronous message queues.
+ * 
+ * Not all queues may implement all the methods.
+ * Attempt to call non-supported method will result in NotImplemented exception.
+ * To verify if specific method is supported consult with [[MessagingCapabilities]].
+ * 
+ * @see [[MessageEnvelop]]
+ * @see [[MessagingCapabilities]]
  */
 export interface IMessageQueue extends IOpenable, IClosable {
     /**
-     * Abstract method that will contain the logic for retrieving the queue's name.
+     * Gets the queue name
      * 
-     * @returns the queue's name.
+     * @returns the queue name.
      */
     getName(): string;
+
     /**
-     * Abstract method that will contain the logic for retrieving the queue's 
-     * messaging capabilities.
+     * Gets the queue capabilities
      * 
-     * @returns the queue's capabilities.
-     * 
-     * @see [[MessagingCapabilities]]
+     * @returns the queue's capabilities object.
      */
 	getCapabilities(): MessagingCapabilities;
     
     /**
-     * Abstract method that will contain the logic for establishing the amount of 
-     * messages currently in the queue.
+     * Reads the current number of messages in the queue to be delivered.
      * 
-     * @param callback      the function to call with the number of messages in the queue 
-     *                      (or with an error, if one is rasied).
+     * @param callback      callback function that receives number of messages or error.
      */
     readMessageCount(callback: (err: any, count: number) => void): void;
 
-    //TODO: sent over the connection or to the queue?
     /**
-     * Abstract method that will contain the logic for sending a [[MessageEnvelope]].
+     * Sends a message into the queue.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param envelope          the MessageEnvelope to send.
-     * @param callback          (optional) the function to call once sending is complete.
-     *                          Will be called with an error if one is raised.
-     * 
-     * @see [[MessageEnvelope]]
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param envelope          a message envelop to be sent.
+     * @param callback          (optional) callback function that receives error or null for success.
      */
     send(correlationId: string, envelope: MessageEnvelope, callback?: (err: any) => void): void;
+
     /**
-     * Abstract method that will contain the logic for sending an object as a message.
+     * Sends an object into the queue.
+     * Before sending the object is converted into JSON string and wrapped in a [[MessageEnvelop]].
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param messageType       the message's type. Will used when converting the message to a
-     *                          MessageEnvelope.
-     * @param message           the message to send.
-     * @param callback          (optional) the function to call once sending is complete.
-     *                          Will be called with an error if one is raised.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param messageType       a message type
+     * @param value             an object value to be sent
+     * @param callback          (optional) callback function that receives error or null for success.
      * 
-     * @see [[MessageEnvelope]]
+     * @see [[send]]
      */
-    sendAsObject(correlationId: string, messageType: string, message: any, callback?: (err: any) => void): void;
+    sendAsObject(correlationId: string, messageType: string, value: any, callback?: (err: any) => void): void;
+
     /**
-     * Abstract method that will contain the logic for retrieving the next message without removing 
-     * it from the queue.
+     * Peeks a single incoming message from the queue without removing it.
+     * If there are no messages available in the queue it returns null.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param callback          the function to call with the peeked message 
-     *                          (or with an error, if one is raised).
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param callback          callback function that receives a message or error.
      */
     peek(correlationId: string, callback: (err: any, result: MessageEnvelope) => void): void;
+
     /**
-     * Abstract method that will contain the logic for retrieving a batch of messages without 
-     * removing them from the queue.
+     * Peeks multiple incoming messages from the queue without removing them.
+     * If there are no messages available in the queue it returns an empty list.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param messageCount      the number of message to peek.
-     * @param callback          the function to call with the peeked messages 
-     *                          (or with an error, if one is raised).
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param messageCount      a maximum number of messages to peek.
+     * @param callback          callback function that receives a list with messages or error.
      */
     peekBatch(correlationId: string, messageCount: number, callback: (err: any, result: MessageEnvelope[]) => void): void;
+
     /**
-     * Abstract method that will wait the given amount of time for a message to arrive in 
-     * the queue (if it is empty) and, once one arrives, will remove it from the queue and lock it
-     * for processing. If the queue already contains messages then the next one will be received.
+     * Receives an incoming message and removes it from the queue.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param waitTimeout       the amount of time to wait for a message to arrive.
-     * @param callback          the function to call with the received message 
-     *                          (or with an error, if one is raised).
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param waitTimeout       a timeout in milliseconds to wait for a message to come.
+     * @param callback          callback function that receives a message or error.
      */
     receive(correlationId: string, waitTimeout: number, callback: (err: any, result: MessageEnvelope) => void): void;
 
     /**
-     * Abstract method that will contain the logic for renewing the given message's lock.
+     * Renews a lock on a message that makes it invisible from other receivers in the queue.
+     * This method is usually used to extend the message processing time.
      * 
-     * @param message       the message to renew a lock for.
-     * @param lockTimeout   the lock's new timeout.
-     * @param callback      (optional) the function to call once the lock has been renewed.
-     *                      Will be called with an error if one is raised.
+     * @param message       a message to extend its lock.
+     * @param lockTimeout   a locking timeout in milliseconds.
+     * @param callback      (optional) callback function that receives an error or null for success.
      */
     renewLock(message: MessageEnvelope, lockTimeout: number, callback?: (err: any) => void): void;
+
     /**
-     * Abstract method that will contain the logic for completing the 
-     * processing of a locked message and removing its lock.
+     * Permanently removes a message from the queue.
+     * This method is usually used to remove the message after successful processing.
      * 
-     * @param message   the message to complete.
-     * @param callback  (optional) the function to call once the message has been completed.
-     *                  Will be called with an error if one is raised.
+     * @param message   a message to remove.
+     * @param callback  (optional) callback function that receives an error or null for success.
      */
     complete(message: MessageEnvelope, callback?: (err: any) => void): void;
+
     /**
-     * Abstract method that will contain the logic for abandoning the processing of a 
-     * locked message and removing its lock.
+     * Returnes message into the queue and makes it available for all subscribers to receive it again.
+     * This method is usually used to return a message which could not be processed at the moment
+     * to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently
+     * or/and send to dead letter queue.
      * 
-     * @param message   the message to abandon.
-     * @param callback  (optional) the function to call once the message has been abandoned.
-     *                  Will be called with an error if one is raised.
+     * @param message   a message to return.
+     * @param callback  (optional) callback function that receives an error or null for success.
      */
     abandon(message: MessageEnvelope, callback?: (err: any) => void): void; 
+
     /**
-     * Abstract method that will contain the logic for moving a locked message to the dead 
-     * letter queue.
+     * Permanently removes a message from the queue and sends it to dead letter queue.
      * 
-     * @param message   the dead letter.
-     * @param callback  (optional) the function to call once the message has been moved.
-     *                  Will be called with an error if one is raised.
+     * @param message   a message to be removed.
+     * @param callback  (optional) callback function that receives an error or null for success.
      */
     moveToDeadLetter(message: MessageEnvelope, callback?: (err: any) => void): void;
 
-    //TODO: listen vs beginListen
     /**
-     * Abstract method that will listen to the queue and, if a message is [[receive received]], 
-     * will pass it to the given message receiver for processing.
+     * Listens for incoming messages and blocks the current thread until queue is closed.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param receiver          the message receiver to pass the received message(s) to.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param receiver          a receiver to receive incoming messages.
      * 
      * @see [[IMessageReceiver]]
      * @see [[receive]]
      */
     listen(correlationId: string, receiver: IMessageReceiver): void;
+
     /**
-     * Abstract method that will contain the logic starting the [[listen listening]] process.
+     * Listens for incoming messages without blocking the current thread.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param receiver          the message receiver to pass the received message(s) to.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param receiver          a receiver to receive incoming messages.
      * 
      * @see [[listen]]
      * @see [[IMessageReceiver]]
      */
     beginListen(correlationId: string, receiver: IMessageReceiver): void;
+
     /**
-     * Abstract method that will contain the logic for stopping this queue's listening process.
+     * Ends listening for incoming messages.
+     * When this method is call [[listen]] unblocks the thread and execution continues.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      */
     endListen(correlationId: string): void;
 }

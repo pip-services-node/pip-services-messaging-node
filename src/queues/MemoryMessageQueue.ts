@@ -12,22 +12,34 @@ import { MessagingCapabilities } from './MessagingCapabilities';
 import { LockedMessage } from './LockedMessage';
 
 /**
- * In-memory implementation of the abstract [[MessageQueue]] class. Capable of performing all queue actions, 
- * with the exception of moving messages to a dead letter queue.
+ * Message queue that sends and receives messages within the same process by using shared memory.
  * 
- * MessageQueues can be configured using the [[configure]] method, which searches for and sets:
- * - the queue's name as the configuration's name ("name", "id", or "descriptor" parameters);
- * - the logger's log-level and source ("level" and "source" parameters);
- * - the connection resolver's connections ("connection(s)" section);
- * - the credential resolver's credentials ("credential(s)" section).
+ * This queue is typically used for testing to mock real queues.
  * 
- * A MessageQueue can reference a logger, counters, a connection resolver, and a credential resolver.
- * These references can be set passing the corresponding "logger", "counters", "discovery" (for the 
- * connection resolver), and "credential-store" (for the credential resolver) references to the object's 
- * [[setReferences]] method.
+ * ### Configuration parameters ###
+ * 
+ * name:                        name of the message queue
+ * 
+ * ### References ###
+ * 
+ * - *:logger:*:*:1.0           (optional) ILogger components to pass log messages
+ * - *:counters:*:*:1.0         (optional) ICounters components to pass collected measurements
  * 
  * @see [[MessageQueue]]
  * @see [[MessagingCapabilities]]
+ * 
+ * ### Example ###
+ * 
+ * let queue = new MessageQueue("myqueue");
+ * 
+ * queue.send("123", new MessageEnvelop(null, "mymessage", "ABC"));
+ * 
+ * queue.receive("123", (err, message) => {
+ *     if (message != null) {
+ *        ...
+ *        queue.complete("123", message);
+ *     }
+ * });
  */
 export class MemoryMessageQueue extends MessageQueue {
     private _messages: MessageEnvelope[] = [];
@@ -38,10 +50,9 @@ export class MemoryMessageQueue extends MessageQueue {
     private _cancel: boolean = false;
 
     /**
-     * Creates a new MemoryMessageQueue, which is capable of performing all queue actions, 
-     * except for moving messages to a dead letter queue.
+     * Creates a new instance of the message queue.
      * 
-     * @param name  the queue's name.
+     * @param name  (optional) a queue name.
      * 
      * @see [[MessagingCapabilities]]
      */
@@ -51,25 +62,21 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * @returns whether or not this queue is currently open.
+	 * Checks if the component is opened.
+	 * 
+	 * @returns true if the component has been opened and false otherwise.
      */
     public isOpen(): boolean {
         return this._opened;
     }
 
     /**
-     * Since a memory queue does not establish any connections, simply sets this queue to 
-     * "opened" and calls the callback with <code>null</code>. 
+     * Opens the component with given connection and credential parameters.
      * 
-     * When overriding this method in child classes that require a connection to be established, 
-     * use the provided connection parameters to establish the connection and the credential 
-     * parameters for authentication.
-     * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param connection        the parameters of the connection.
-     * @param credential        the credentials to use for authentication.
-     * @param callback          the function to call once the connection has been opened.
-     *                          Will be called with an error if one is raised.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param connection        connection parameters
+     * @param credential        credential parameters
+     * @param callback 			callback function that receives error or null no errors occured.
      */
     protected openWithParams(correlationId: string, connection: ConnectionParams, credential: CredentialParams, callback: (err: any) => void): void {
         this._opened = true;
@@ -77,14 +84,10 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Closes this queue.
-     * 
-     * When overriding this method in child classes that establish a connection upon being opened, 
-     * make sure to close the connection that was previously opened, before calling the callback.
-     * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param callback          the function to call once the connection has been closed.
-     *                          Will be called with an error if one is raised.
+	 * Closes component and frees used resources.
+	 * 
+	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
      */
     public close(correlationId: string, callback: (err: any) => void): void {
         this._opened = false;
@@ -94,11 +97,10 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Clears this queue's messages (including locked messages).
-     * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param callback          the function to call once the queue has been cleared.
-     *                          Will be called with an error if one is raised.
+	 * Clears component state.
+	 * 
+	 * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
      */
     public clear(correlationId: string, callback: (err?: any) => void): void {
         this._messages = [];
@@ -109,10 +111,9 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Counts the amount of messages currently in the queue.
+     * Reads the current number of messages in the queue to be delivered.
      * 
-     * @param callback      the function to call with the number of messages in the queue 
-     *                      (or with an error, if one is rasied).
+     * @param callback      callback function that receives number of messages or error.
      */
     public readMessageCount(callback: (err: any, count: number) => void): void {
         let count = this._messages.length;
@@ -120,14 +121,11 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Sends a [[MessageEnvelope]] to the queue and sets its sent time to the current time.
+     * Sends a message into the queue.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param envelope          the MessageEnvelope to send.
-     * @param callback          (optional) the function to call once sending is complete.
-     *                          Will be called with an error if one is raised.
-     * 
-     * @see [[MessageEnvelope]]
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param envelope          a message envelop to be sent.
+     * @param callback          (optional) callback function that receives error or null for success.
      */
     public send(correlationId: string, envelope: MessageEnvelope, callback?: (err: any) => void): void {
         try {
@@ -146,11 +144,11 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Reads the next message without removing it from the queue.
+     * Peeks a single incoming message from the queue without removing it.
+     * If there are no messages available in the queue it returns null.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param callback          the function to call with the peeked message 
-     *                          (or with an error, if one is raised).
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param callback          callback function that receives a message or error.
      */
     public peek(correlationId: string, callback: (err: any, result: MessageEnvelope) => void): void {
         try {
@@ -170,12 +168,12 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Reads a batch of messages without removing them from the queue.
+     * Peeks multiple incoming messages from the queue without removing them.
+     * If there are no messages available in the queue it returns an empty list.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param messageCount      the number of message to peek.
-     * @param callback          the function to call with the peeked messages 
-     *                          (or with an error, if one is raised).
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param messageCount      a maximum number of messages to peek.
+     * @param callback          callback function that receives a list with messages or error.
      */
     public peekBatch(correlationId: string, messageCount: number, callback: (err: any, result: MessageEnvelope[]) => void): void {
         try {
@@ -190,15 +188,11 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Waits the given amount of time for a message to arrive in the queue (if it is empty) and, once one arrives, 
-     * removes it from the queue and locks it for processing. If the queue already contains messages then the next 
-     * one will be received.
+     * Receives an incoming message and removes it from the queue.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param waitTimeout       the amount of time to wait for a message to arrive. Will be 
-     *                          set as the lock's timeout as well.
-     * @param callback          the function to call with the received message 
-     *                          (or with an error, if one is raised).
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param waitTimeout       a timeout in milliseconds to wait for a message to come.
+     * @param callback          callback function that receives a message or error.
      */
     public receive(correlationId: string, waitTimeout: number, callback: (err: any, result: MessageEnvelope) => void): void {
         let err: any = null;
@@ -258,14 +252,12 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Renews the given message's lock. This method only renews locks that have already
-     * expired.
+     * Renews a lock on a message that makes it invisible from other receivers in the queue.
+     * This method is usually used to extend the message processing time.
      * 
-     * @param message       the message to renew a lock for.
-     * @param lockTimeout   the lock's new timeout. NOT USED in this method - the lock's
-     *                      timeout will be extended using the timeout set in the lock itself.
-     * @param callback      (optional) the function to call once the lock has been renewed.
-     *                      Will be called with an error if one is raised.
+     * @param message       a message to extend its lock.
+     * @param lockTimeout   a locking timeout in milliseconds.
+     * @param callback      (optional) callback function that receives an error or null for success.
      */
     public renewLock(message: MessageEnvelope, lockTimeout: number, callback?: (err: any) => void): void {
         if (message.getReference() == null) {
@@ -298,11 +290,11 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Completes the processing of a locked message and removes its lock.
+     * Permanently removes a message from the queue.
+     * This method is usually used to remove the message after successful processing.
      * 
-     * @param message   the message to complete.
-     * @param callback  the function to call once the message has been completed.
-     *                  Will be called with an error if one is raised.
+     * @param message   a message to remove.
+     * @param callback  (optional) callback function that receives an error or null for success.
      */
     public complete(message: MessageEnvelope, callback: (err: any) => void): void {
         if (message.getReference() == null) {
@@ -325,11 +317,13 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Abandons the processing of a locked message and removes its lock.
+     * Returnes message into the queue and makes it available for all subscribers to receive it again.
+     * This method is usually used to return a message which could not be processed at the moment
+     * to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently
+     * or/and send to dead letter queue.
      * 
-     * @param message   the message to abandon.
-     * @param callback  the function to call once the message has been abandoned.
-     *                  Will be called with an error if one is raised.
+     * @param message   a message to return.
+     * @param callback  (optional) callback function that receives an error or null for success.
      */
     public abandon(message: MessageEnvelope, callback: (err: any) => void): void {
         if (message.getReference() == null) {
@@ -370,13 +364,10 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Moves a locked message to the dead letter queue. Since this class does not support 
-     * moving message to a dead letter queue, the message will actually be abandoned. Logs 
-     * and counters, however, will log and count the message as a dead message.
+     * Permanently removes a message from the queue and sends it to dead letter queue.
      * 
-     * @param message   the dead letter.
-     * @param callback  the function to call once the message has been moved.
-     *                  Will be called with an error if one is raised.
+     * @param message   a message to be removed.
+     * @param callback  (optional) callback function that receives an error or null for success.
      */
     public moveToDeadLetter(message: MessageEnvelope, callback: (err: any) => void): void {
         if (message.getReference() == null) {
@@ -400,11 +391,10 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Makes the queue start listening for a message and, if one is [[receive received]], passes
-     * it to the given message receiver for processing.
+     * Listens for incoming messages and blocks the current thread until queue is closed.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param receiver          the message receiver to pass the received message to.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param receiver          a receiver to receive incoming messages.
      * 
      * @see [[IMessageReceiver]]
      * @see [[receive]]
@@ -454,9 +444,10 @@ export class MemoryMessageQueue extends MessageQueue {
     }
 
     /**
-     * Makes the queue stop listening for messages.
+     * Ends listening for incoming messages.
+     * When this method is call [[listen]] unblocks the thread and execution continues.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
      */
     public endListen(correlationId: string): void {
         this._cancel = true;

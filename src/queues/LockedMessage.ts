@@ -2,13 +2,25 @@
 import { MessageEnvelope } from './MessageEnvelope';
 
 /**
- * Allows locking messages in message queues.
+ * Data object used to store and lock incoming messages
+ * in [[MemoryMessageQueue]].
+ * 
+ * @see [[MemoryMessageQueue]]
  */
 export class LockedMessage {
-    /** The message to lock. */
+    /**
+     * The incoming message.
+     */
     public message: MessageEnvelope;
-    /** The time at which the lock expires. Calculated as <code><time when locked> + timeout</code> */
+
+    /**
+     * The expiration time for the message lock.
+     * If it is null then the message is not locked.
+     */
     public expirationTime: Date;
-    /** The locks timeout. */
+
+    /**
+     * The lock timeout in milliseconds.
+     */
     public timeout: number;
 }

@@ -6,39 +6,114 @@ const async = require('async');
 const MessageQueue_1 = require("./MessageQueue");
 const MessagingCapabilities_1 = require("./MessagingCapabilities");
 const LockedMessage_1 = require("./LockedMessage");
+/**
+ * Message queue that sends and receives messages within the same process by using shared memory.
+ *
+ * This queue is typically used for testing to mock real queues.
+ *
+ * ### Configuration parameters ###
+ *
+ * name:                        name of the message queue
+ *
+ * ### References ###
+ *
+ * - *:logger:*:*:1.0           (optional) ILogger components to pass log messages
+ * - *:counters:*:*:1.0         (optional) ICounters components to pass collected measurements
+ *
+ * @see [[MessageQueue]]
+ * @see [[MessagingCapabilities]]
+ *
+ * ### Example ###
+ *
+ * let queue = new MessageQueue("myqueue");
+ *
+ * queue.send("123", new MessageEnvelop(null, "mymessage", "ABC"));
+ *
+ * queue.receive("123", (err, message) => {
+ *     if (message != null) {
+ *        ...
+ *        queue.complete("123", message);
+ *     }
+ * });
+ */
 class MemoryMessageQueue extends MessageQueue_1.MessageQueue {
+    /**
+     * Creates a new instance of the message queue.
+     *
+     * @param name  (optional) a queue name.
+     *
+     * @see [[MessagingCapabilities]]
+     */
     constructor(name) {
         super(name);
         this._messages = [];
         this._lockTokenSequence = 0;
         this._lockedMessages = {};
         this._opened = false;
+        /** Used to stop the listening process. */
         this._cancel = false;
         this._capabilities = new MessagingCapabilities_1.MessagingCapabilities(true, true, true, true, true, true, true, false, true);
     }
+    /**
+     * Checks if the component is opened.
+     *
+     * @returns true if the component has been opened and false otherwise.
+     */
     isOpen() {
         return this._opened;
     }
+    /**
+     * Opens the component with given connection and credential parameters.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param connection        connection parameters
+     * @param credential        credential parameters
+     * @param callback 			callback function that receives error or null no errors occured.
+     */
     openWithParams(correlationId, connection, credential, callback) {
         this._opened = true;
         callback(null);
     }
+    /**
+     * Closes component and frees used resources.
+     *
+     * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
+     */
     close(correlationId, callback) {
         this._opened = false;
         this._cancel = true;
         this._logger.trace(correlationId, "Closed queue %s", this);
         callback(null);
     }
+    /**
+     * Clears component state.
+     *
+     * @param correlationId 	(optional) transaction id to trace execution through call chain.
+     * @param callback 			callback function that receives error or null no errors occured.
+     */
     clear(correlationId, callback) {
         this._messages = [];
         this._lockedMessages = {};
         this._cancel = false;
         callback();
     }
+    /**
+     * Reads the current number of messages in the queue to be delivered.
+     *
+     * @param callback      callback function that receives number of messages or error.
+     */
     readMessageCount(callback) {
         let count = this._messages.length;
         callback(null, count);
     }
+    /**
+     * Sends a message into the queue.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param envelope          a message envelop to be sent.
+     * @param callback          (optional) callback function that receives error or null for success.
+     */
     send(correlationId, envelope, callback) {
         try {
             envelope.sent_time = new Date();
@@ -56,6 +131,13 @@ class MemoryMessageQueue extends MessageQueue_1.MessageQueue {
                 throw ex;
         }
     }
+    /**
+     * Peeks a single incoming message from the queue without removing it.
+     * If there are no messages available in the queue it returns null.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param callback          callback function that receives a message or error.
+     */
     peek(correlationId, callback) {
         try {
             let message = null;
@@ -70,6 +152,14 @@ class MemoryMessageQueue extends MessageQueue_1.MessageQueue {
             callback(ex, null);
         }
     }
+    /**
+     * Peeks multiple incoming messages from the queue without removing them.
+     * If there are no messages available in the queue it returns an empty list.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param messageCount      a maximum number of messages to peek.
+     * @param callback          callback function that receives a list with messages or error.
+     */
     peekBatch(correlationId, messageCount, callback) {
         try {
             let messages = this._messages.slice(0, messageCount);
@@ -80,6 +170,13 @@ class MemoryMessageQueue extends MessageQueue_1.MessageQueue {
             callback(ex, null);
         }
     }
+    /**
+     * Receives an incoming message and removes it from the queue.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param waitTimeout       a timeout in milliseconds to wait for a message to come.
+     * @param callback          callback function that receives a message or error.
+     */
     receive(correlationId, waitTimeout, callback) {
         let err = null;
         let message = null;
@@ -126,6 +223,14 @@ class MemoryMessageQueue extends MessageQueue_1.MessageQueue {
             callback(err, message);
         });
     }
+    /**
+     * Renews a lock on a message that makes it invisible from other receivers in the queue.
+     * This method is usually used to extend the message processing time.
+     *
+     * @param message       a message to extend its lock.
+     * @param lockTimeout   a locking timeout in milliseconds.
+     * @param callback      (optional) callback function that receives an error or null for success.
+     */
     renewLock(message, lockTimeout, callback) {
         if (message.getReference() == null) {
             if (callback)
@@ -156,6 +261,13 @@ class MemoryMessageQueue extends MessageQueue_1.MessageQueue {
                 throw ex;
         }
     }
+    /**
+     * Permanently removes a message from the queue.
+     * This method is usually used to remove the message after successful processing.
+     *
+     * @param message   a message to remove.
+     * @param callback  (optional) callback function that receives an error or null for success.
+     */
     complete(message, callback) {
         if (message.getReference() == null) {
             if (callback)
@@ -177,6 +289,15 @@ class MemoryMessageQueue extends MessageQueue_1.MessageQueue {
                 throw ex;
         }
     }
+    /**
+     * Returnes message into the queue and makes it available for all subscribers to receive it again.
+     * This method is usually used to return a message which could not be processed at the moment
+     * to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently
+     * or/and send to dead letter queue.
+     *
+     * @param message   a message to return.
+     * @param callback  (optional) callback function that receives an error or null for success.
+     */
     abandon(message, callback) {
         if (message.getReference() == null) {
             if (callback)
@@ -215,6 +336,12 @@ class MemoryMessageQueue extends MessageQueue_1.MessageQueue {
         }
         this.send(message.correlation_id, message, null);
     }
+    /**
+     * Permanently removes a message from the queue and sends it to dead letter queue.
+     *
+     * @param message   a message to be removed.
+     * @param callback  (optional) callback function that receives an error or null for success.
+     */
     moveToDeadLetter(message, callback) {
         if (message.getReference() == null) {
             if (callback)
@@ -237,6 +364,15 @@ class MemoryMessageQueue extends MessageQueue_1.MessageQueue {
                 throw ex;
         }
     }
+    /**
+     * Listens for incoming messages and blocks the current thread until queue is closed.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param receiver          a receiver to receive incoming messages.
+     *
+     * @see [[IMessageReceiver]]
+     * @see [[receive]]
+     */
     listen(correlationId, receiver) {
         let timeoutInterval = 1000;
         this._logger.trace(null, "Started listening messages at %s", this.toString());
@@ -274,6 +410,12 @@ class MemoryMessageQueue extends MessageQueue_1.MessageQueue {
                 this._logger.error(correlationId, err, "Failed to process the message");
         });
     }
+    /**
+     * Ends listening for incoming messages.
+     * When this method is call [[listen]] unblocks the thread and execution continues.
+     *
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     */
     endListen(correlationId) {
         this._cancel = true;
     }
