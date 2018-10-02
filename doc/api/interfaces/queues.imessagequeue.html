@@ -70,8 +70,19 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Interface for classes that need to be able to manage a queue of messages.</p>
+						<p>Interface for asynchronous message queues.</p>
 					</div>
+					<p>Not all queues may implement all the methods.
+						Attempt to call non-supported method will result in NotImplemented exception.
+					To verify if specific method is supported consult with <a href="../classes/queues.messagingcapabilities.html">MessagingCapabilities</a>.</p>
+					<dl class="tsd-comment-tags">
+						<dt>see</dt>
+						<dd><p>[[MessageEnvelop]]</p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="../classes/queues.messagingcapabilities.html">MessagingCapabilities</a></p>
+						</dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -139,13 +150,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L120">queues/IMessageQueue.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L119">queues/IMessageQueue.ts:119</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for abandoning the processing of a
-									locked message and removing its lock.</p>
+									<p>Returnes message into the queue and makes it available for all subscribers to receive it again.
+										This method is usually used to return a message which could not be processed at the moment
+										to repeat the attempt. Messages that cause unrecoverable errors shall be removed permanently
+									or/and send to dead letter queue.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -153,14 +166,13 @@
 								<li>
 									<h5>message: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the message to abandon.</p>
+										<p>a message to return.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once the message has been abandoned.
-										Will be called with an error if one is raised.</p>
+										<p>(optional) callback function that receives an error or null for success.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -196,12 +208,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L152">queues/IMessageQueue.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L149">queues/IMessageQueue.ts:149</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic starting the <a href="queues.imessagequeue.html#listen">listening</a> process.</p>
+									<p>Listens for incoming messages without blocking the current thread.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
@@ -223,7 +235,7 @@
 								<li>
 									<h5>receiver: <a href="queues.imessagereceiver.html" class="tsd-signature-type">IMessageReceiver</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the message receiver to pass the received message(s) to.</p>
+										<p>a receiver to receive incoming messages.</p>
 									</div>
 								</li>
 							</ul>
@@ -243,7 +255,7 @@
 								<p>Inherited from IClosable.close</p>
 								<p>Overrides IClosable.close</p>
 								<ul>
-									<li>Defined in /Users/mac/PipServices/PipServices v3.0/pip-services-messaging-node/node_modules/pip-services-commons-node/obj/src/run/IClosable.d.ts:14</li>
+									<li>Defined in D:/Work/Project/Node.js/documentation/pip-services-messaging-node/node_modules/pip-services-commons-node/obj/src/run/IClosable.d.ts:14</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -257,7 +269,7 @@
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) transaction id to trace execution through call chain.</p>
+										<p>unique business transaction id to trace calls across components.</p>
 									</div>
 								</li>
 								<li>
@@ -300,13 +312,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L111">queues/IMessageQueue.ts:111</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L108">queues/IMessageQueue.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for completing the
-									processing of a locked message and removing its lock.</p>
+									<p>Permanently removes a message from the queue.
+									This method is usually used to remove the message after successful processing.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -314,14 +326,13 @@
 								<li>
 									<h5>message: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the message to complete.</p>
+										<p>a message to remove.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once the message has been completed.
-										Will be called with an error if one is raised.</p>
+										<p>(optional) callback function that receives an error or null for success.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -357,12 +368,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L158">queues/IMessageQueue.ts:158</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L157">queues/IMessageQueue.ts:157</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for stopping this queue&#39;s listening process.</p>
+									<p>Ends listening for incoming messages.
+									When this method is call <a href="queues.imessagequeue.html#listen">listen</a> unblocks the thread and execution continues.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -388,22 +400,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L27">queues/IMessageQueue.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L32">queues/IMessageQueue.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for retrieving the queue&#39;s
-									messaging capabilities.</p>
+									<p>Gets the queue capabilities</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="../classes/queues.messagingcapabilities.html">MessagingCapabilities</a></p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/queues.messagingcapabilities.html" class="tsd-signature-type">MessagingCapabilities</a></h4>
-							<p>the queue&#39;s capabilities.</p>
+							<p>the queue&#39;s capabilities object.</p>
 						</li>
 					</ul>
 				</section>
@@ -417,16 +423,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L18">queues/IMessageQueue.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L25">queues/IMessageQueue.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for retrieving the queue&#39;s name.</p>
+									<p>Gets the queue name</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-							<p>the queue&#39;s name.</p>
+							<p>the queue name.</p>
 						</li>
 					</ul>
 				</section>
@@ -441,7 +447,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from IOpenable.isOpen</p>
 								<ul>
-									<li>Defined in /Users/mac/PipServices/PipServices v3.0/pip-services-messaging-node/node_modules/pip-services-commons-node/obj/src/run/IOpenable.d.ts:13</li>
+									<li>Defined in D:/Work/Project/Node.js/documentation/pip-services-messaging-node/node_modules/pip-services-commons-node/obj/src/run/IOpenable.d.ts:13</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -465,13 +471,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L142">queues/IMessageQueue.ts:142</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L138">queues/IMessageQueue.ts:138</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will listen to the queue and, if a message is <a href="queues.imessagequeue.html#receive">received</a>,
-									will pass it to the given message receiver for processing.</p>
+									<p>Listens for incoming messages and blocks the current thread until queue is closed.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
@@ -493,7 +498,7 @@
 								<li>
 									<h5>receiver: <a href="queues.imessagereceiver.html" class="tsd-signature-type">IMessageReceiver</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the message receiver to pass the received message(s) to.</p>
+										<p>a receiver to receive incoming messages.</p>
 									</div>
 								</li>
 							</ul>
@@ -511,13 +516,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L129">queues/IMessageQueue.ts:129</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L127">queues/IMessageQueue.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for moving a locked message to the dead
-									letter queue.</p>
+									<p>Permanently removes a message from the queue and sends it to dead letter queue.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -525,14 +529,13 @@
 								<li>
 									<h5>message: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the dead letter.</p>
+										<p>a message to be removed.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once the message has been moved.
-										Will be called with an error if one is raised.</p>
+										<p>(optional) callback function that receives an error or null for success.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -569,7 +572,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from IOpenable.open</p>
 								<ul>
-									<li>Defined in /Users/mac/PipServices/PipServices v3.0/pip-services-messaging-node/node_modules/pip-services-commons-node/obj/src/run/IOpenable.d.ts:22</li>
+									<li>Defined in D:/Work/Project/Node.js/documentation/pip-services-messaging-node/node_modules/pip-services-commons-node/obj/src/run/IOpenable.d.ts:22</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -583,7 +586,7 @@
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) transaction id to trace execution through call chain.</p>
+										<p>unique business transaction id to trace calls across components.</p>
 									</div>
 								</li>
 								<li>
@@ -626,13 +629,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L71">queues/IMessageQueue.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L70">queues/IMessageQueue.ts:70</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for retrieving the next message without removing
-									it from the queue.</p>
+									<p>Peeks a single incoming message from the queue without removing it.
+									If there are no messages available in the queue it returns null.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -646,8 +649,7 @@
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the peeked message
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives a message or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -686,13 +688,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L81">queues/IMessageQueue.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L80">queues/IMessageQueue.ts:80</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for retrieving a batch of messages without
-									removing them from the queue.</p>
+									<p>Peeks multiple incoming messages from the queue without removing them.
+									If there are no messages available in the queue it returns an empty list.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -706,14 +708,13 @@
 								<li>
 									<h5>messageCount: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the number of message to peek.</p>
+										<p>a maximum number of messages to peek.</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the peeked messages
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives a list with messages or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -752,13 +753,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L36">queues/IMessageQueue.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L39">queues/IMessageQueue.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for establishing the amount of
-									messages currently in the queue.</p>
+									<p>Reads the current number of messages in the queue to be delivered.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -766,8 +766,7 @@
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the number of messages in the queue
-										(or with an error, if one is rasied).</p>
+										<p>callback function that receives number of messages or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -806,14 +805,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L92">queues/IMessageQueue.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L89">queues/IMessageQueue.ts:89</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will wait the given amount of time for a message to arrive in
-										the queue (if it is empty) and, once one arrives, will remove it from the queue and lock it
-									for processing. If the queue already contains messages then the next one will be received.</p>
+									<p>Receives an incoming message and removes it from the queue.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -827,14 +824,13 @@
 								<li>
 									<h5>waitTimeout: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the amount of time to wait for a message to arrive.</p>
+										<p>a timeout in milliseconds to wait for a message to come.</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the received message
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives a message or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -873,12 +869,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L102">queues/IMessageQueue.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L99">queues/IMessageQueue.ts:99</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for renewing the given message&#39;s lock.</p>
+									<p>Renews a lock on a message that makes it invisible from other receivers in the queue.
+									This method is usually used to extend the message processing time.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -886,20 +883,19 @@
 								<li>
 									<h5>message: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the message to renew a lock for.</p>
+										<p>a message to extend its lock.</p>
 									</div>
 								</li>
 								<li>
 									<h5>lockTimeout: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the lock&#39;s new timeout.</p>
+										<p>a locking timeout in milliseconds.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once the lock has been renewed.
-										Will be called with an error if one is raised.</p>
+										<p>(optional) callback function that receives an error or null for success.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -935,18 +931,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L49">queues/IMessageQueue.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L48">queues/IMessageQueue.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for sending a <a href="../classes/queues.messageenvelope.html">MessageEnvelope</a>.</p>
+									<p>Sends a message into the queue.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="../classes/queues.messageenvelope.html">MessageEnvelope</a></p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -959,14 +950,13 @@
 								<li>
 									<h5>envelope: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the MessageEnvelope to send.</p>
+										<p>a message envelop to be sent.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once sending is complete.
-										Will be called with an error if one is raised.</p>
+										<p>(optional) callback function that receives error or null for success.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -996,22 +986,23 @@
 					<a name="sendasobject" class="tsd-anchor"></a>
 					<h3>send<wbr>AsObject</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">send<wbr>AsObject<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, messageType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">send<wbr>AsObject<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, messageType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageQueue.ts#L62">queues/IMessageQueue.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageQueue.ts#L61">queues/IMessageQueue.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for sending an object as a message.</p>
+									<p>Sends an object into the queue.
+									Before sending the object is converted into JSON string and wrapped in a [[MessageEnvelop]].</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
-									<dd><p><a href="../classes/queues.messageenvelope.html">MessageEnvelope</a></p>
+									<dd><p><a href="queues.imessagequeue.html#send">send</a></p>
 									</dd>
 								</dl>
 							</div>
@@ -1026,21 +1017,19 @@
 								<li>
 									<h5>messageType: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the message&#39;s type. Will used when converting the message to a
-										MessageEnvelope.</p>
+										<p>a message type</p>
 									</div>
 								</li>
 								<li>
-									<h5>message: <span class="tsd-signature-type">any</span></h5>
+									<h5>value: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the message to send.</p>
+										<p>an object value to be sent</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once sending is complete.
-										Will be called with an error if one is raised.</p>
+										<p>(optional) callback function that receives error or null for success.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">

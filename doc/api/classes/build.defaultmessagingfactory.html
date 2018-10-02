@@ -70,11 +70,15 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Contains a static read-only descriptor for <a href="queues.memorymessagequeue.html">MemoryMessageQueue</a> and a default &quot;messaging&quot; descriptor.</p>
+						<p>Creates <a href="queues.memorymessagequeue.html">MemoryMessageQueue</a> components by their descriptors.
+						Name of created message queue is taken from its descriptor.</p>
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>see</dt>
 						<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/build.factory.html" class="external">Factory</a></p>
+						</dd>
+						<dt>see</dt>
+						<dd><p><a href="queues.memorymessagequeue.html">MemoryMessageQueue</a></p>
 						</dd>
 					</dl>
 				</div>
@@ -139,18 +143,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/build/DefaultMessagingFactory.ts#L14">build/DefaultMessagingFactory.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/build/DefaultMessagingFactory.ts#L16">build/DefaultMessagingFactory.ts:16</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Create a new DefaultMessagingFactory object, containing a <a href="queues.memorymessagequeue.html">MemoryMessageQueue</a> object factory.</p>
+									<p>Create a new instance of the factory.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="queues.memorymessagequeue.html">MemoryMessageQueue</a></p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="build.defaultmessagingfactory.html" class="tsd-signature-type">DefaultMessagingFactory</a></h4>
 						</li>
@@ -165,7 +164,7 @@
 					<div class="tsd-signature tsd-kind-icon">Descriptor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Descriptor</span><span class="tsd-signature-symbol"> =&nbsp;new Descriptor(&quot;pip-services&quot;, &quot;factory&quot;, &quot;messaging&quot;, &quot;default&quot;, &quot;1.0&quot;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/build/DefaultMessagingFactory.ts#L13">build/DefaultMessagingFactory.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/build/DefaultMessagingFactory.ts#L15">build/DefaultMessagingFactory.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -175,7 +174,7 @@
 					<div class="tsd-signature tsd-kind-icon">Memory<wbr>Queue<wbr>Descriptor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Descriptor</span><span class="tsd-signature-symbol"> =&nbsp;new Descriptor(&quot;pip-services&quot;, &quot;message-queue&quot;, &quot;memory&quot;, &quot;*&quot;, &quot;1.0&quot;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/build/DefaultMessagingFactory.ts#L14">build/DefaultMessagingFactory.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/build/DefaultMessagingFactory.ts#L16">build/DefaultMessagingFactory.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -193,7 +192,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from Factory.canCreate</p>
 								<ul>
-									<li>Defined in /Users/mac/PipServices/PipServices v3.0/pip-services-messaging-node/node_modules/pip-services-components-node/obj/src/build/Factory.d.ts:51</li>
+									<li>Defined in D:/Work/Project/Node.js/documentation/pip-services-messaging-node/node_modules/pip-services-components-node/obj/src/build/Factory.d.ts:51</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -226,7 +225,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from Factory.create</p>
 								<ul>
-									<li>Defined in /Users/mac/PipServices/PipServices v3.0/pip-services-messaging-node/node_modules/pip-services-components-node/obj/src/build/Factory.d.ts:60</li>
+									<li>Defined in D:/Work/Project/Node.js/documentation/pip-services-messaging-node/node_modules/pip-services-components-node/obj/src/build/Factory.d.ts:60</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -264,7 +263,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from Factory.register</p>
 								<ul>
-									<li>Defined in /Users/mac/PipServices/PipServices v3.0/pip-services-messaging-node/node_modules/pip-services-components-node/obj/src/build/Factory.d.ts:35</li>
+									<li>Defined in D:/Work/Project/Node.js/documentation/pip-services-messaging-node/node_modules/pip-services-components-node/obj/src/build/Factory.d.ts:35</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -328,12 +327,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from Factory.registerAsType</p>
 								<ul>
-									<li>Defined in /Users/mac/PipServices/PipServices v3.0/pip-services-messaging-node/node_modules/pip-services-components-node/obj/src/build/Factory.d.ts:44</li>
+									<li>Defined in D:/Work/Project/Node.js/documentation/pip-services-messaging-node/node_modules/pip-services-components-node/obj/src/build/Factory.d.ts:44</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Registers a factory that can create instance of &#39;objectFactory&#39; classes.</p>
+									<p>Registers a factory that can create instances of &#39;objectFactory&#39; classes.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>throws</dt>

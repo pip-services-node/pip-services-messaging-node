@@ -14,24 +14,24 @@ import { MessageEnvelope } from './MessageEnvelope';
  *
  * ### References ###
  *
- * - *:logger:*:*:1.0           (optional) ILogger components to pass log messages
- * - *:counters:*:*:1.0         (optional) ICounters components to pass collected measurements
+ * - <code>*:logger:*:*:1.0</code>           (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
+ * - <code>*:counters:*:*:1.0</code>         (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/count.icounters.html ICounters]] components to pass collected measurements
  *
  * @see [[MessageQueue]]
  * @see [[MessagingCapabilities]]
  *
  * ### Example ###
  *
- * let queue = new MessageQueue("myqueue");
+ *     let queue = new MessageQueue("myqueue");
  *
- * queue.send("123", new MessageEnvelop(null, "mymessage", "ABC"));
+ *     queue.send("123", new MessageEnvelop(null, "mymessage", "ABC"));
  *
- * queue.receive("123", (err, message) => {
- *     if (message != null) {
- *        ...
- *        queue.complete("123", message);
- *     }
- * });
+ *     queue.receive("123", (err, message) => {
+ *         if (message != null) {
+ *            ...
+ *            queue.complete("123", message);
+ *         }
+ *     });
  */
 export declare class MemoryMessageQueue extends MessageQueue {
     private _messages;

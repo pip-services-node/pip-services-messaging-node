@@ -70,9 +70,22 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Interface for classes that need to be able to receive messages. Message receivers
-						can be listened to by queues and other classes.</p>
+						<p>Callback interface to receive incoming messages.</p>
 					</div>
+					<h3 id="example">Example</h3>
+					<pre><code><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyMessageReceiver</span> <span class="hljs-keyword"><span class="hljs-keyword">implements</span> <span class="hljs-type">IMessageReceiver</span></span> </span>{
+  <span class="hljs-keyword">public</span> receiveMessage(envelop: <span class="hljs-type">MessageEnvelop</span>, queue: <span class="hljs-type">IMessageQueue</span>, callback) {
+      console.log(<span class="hljs-string">"Received message: "</span> + envelop.getMessageAsString());
+  }
+}
+
+let messageQueue = <span class="hljs-keyword">new</span> <span class="hljs-type">MemoryMessageQueue</span>();
+messageQueue.listen(<span class="hljs-string">"123"</span>, <span class="hljs-keyword">new</span> <span class="hljs-type">MyMessageReceiver</span>());
+
+messageQueue.open(<span class="hljs-string">"123"</span>, (err) =&gt; {
+   messageQueue.send(<span class="hljs-string">"123"</span>, <span class="hljs-keyword">new</span> <span class="hljs-type">MessageEnvelop</span>(<span class="hljs-literal">null</span>, <span class="hljs-string">"mymessage"</span>, <span class="hljs-string">"ABC"</span>)); <span class="hljs-comment">// Output in console: "ABC"</span>
+});
+</code></pre>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -108,12 +121,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/IMessageReceiver.ts#L22">queues/IMessageReceiver.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/IMessageReceiver.ts#L34">queues/IMessageReceiver.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Abstract method that will contain the logic for receiving a message.</p>
+									<p>Receives incoming message from the queue.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
@@ -129,20 +142,19 @@
 								<li>
 									<h5>envelope: <a href="../classes/queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the message&#39;s envelope</p>
+										<p>an incoming message</p>
 									</div>
 								</li>
 								<li>
 									<h5>queue: <a href="queues.imessagequeue.html" class="tsd-signature-type">IMessageQueue</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the queue that the message is in.</p>
+										<p>a queue where the message comes from</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call once the message has been received.
-										Will be called with an error, if one is raised.</p>
+										<p>callback function that receives error or null for success.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">

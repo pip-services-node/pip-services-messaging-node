@@ -7,18 +7,18 @@ import { MessageEnvelope } from './MessageEnvelope';
  * 
  * ### Example ###
  * 
- * class MyMessageReceiver implements IMessageReceiver {
- *   public receiveMessage(envelop: MessageEnvelop, queue: IMessageQueue, callback) {
- *       console.log("Received message: " + envelop.getMessageAsString());
- *   }
- * }
+ *     class MyMessageReceiver implements IMessageReceiver {
+ *       public receiveMessage(envelop: MessageEnvelop, queue: IMessageQueue, callback) {
+ *           console.log("Received message: " + envelop.getMessageAsString());
+ *       }
+ *     }
  * 
- * let messageQueue = new MemoryMessageQueue();
- * messageQueue.listen("123", new MyMessageReceiver());
+ *     let messageQueue = new MemoryMessageQueue();
+ *     messageQueue.listen("123", new MyMessageReceiver());
  * 
- * messageQueue.open("123", (err) => {
- *    messageQueue.send("123", new MessageEnvelop(null, "mymessage", "ABC")); // Output in console: "ABC"
- * });
+ *     messageQueue.open("123", (err) => {
+ *        messageQueue.send("123", new MessageEnvelop(null, "mymessage", "ABC")); // Output in console: "ABC"
+ *     });
  */
 export interface IMessageReceiver {
     /**

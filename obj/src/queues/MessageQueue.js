@@ -15,25 +15,27 @@ const MessageEnvelope_1 = require("./MessageEnvelope");
  * ### Configuration parameters ###
  *
  * name:                        name of the message queue
+ *
  * connection(s):
- *   discovery_key:             key to retrieve parameters from discovery service
- *   protocol:                  connection protocol like http, https, tcp, udp
- *   host:                      host name or IP address
- *   port:                      port number
- *   uri:                       resource URI or connection string with all parameters in it
+ *   - discovery_key:             key to retrieve parameters from discovery service
+ *   - protocol:                  connection protocol like http, https, tcp, udp
+ *   - host:                      host name or IP address
+ *   - port:                      port number
+ *   - uri:                       resource URI or connection string with all parameters in it
+ *
  * credential(s):
- *   store_key:                 key to retrieve parameters from credential store
- *   username:                  user name
- *   password:                  user password
- *   access_id:                 application access id
- *   access_key:                application secret key
+ *   - store_key:                 key to retrieve parameters from credential store
+ *   - username:                  user name
+ *   - password:                  user password
+ *   - access_id:                 application access id
+ *   - access_key:                application secret key
  *
  * ### References ###
  *
- * - *:logger:*:*:1.0           (optional) ILogger components to pass log messages
- * - *:counters:*:*:1.0         (optional) ICounters components to pass collected measurements
- * - *:discovery:*:*:1.0        (optional) IDiscovery components to discover connection(s)
- * - *:credential-store:*:*:1.0 (optional) ICredentialStore componetns to lookup credential(s)
+ * - <code>*:logger:*:*:1.0</code>           (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
+ * - <code>*:counters:*:*:1.0</code>         (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/count.icounters.html ICounters]] components to pass collected measurements
+ * - <code>*:discovery:*:*:1.0</code>        (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]] components to discover connection(s)
+ * - <code>*:credential-store:*:*:1.0</code> (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/auth.icredentialstore.html ICredentialStore]] componetns to lookup credential(s)
  */
 class MessageQueue {
     /**

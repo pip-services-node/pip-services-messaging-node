@@ -70,8 +70,14 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Allows locking messages in message queues.</p>
+						<p>Data object used to store and lock incoming messages
+						in <a href="queues.memorymessagequeue.html">MemoryMessageQueue</a>.</p>
 					</div>
+					<dl class="tsd-comment-tags">
+						<dt>see</dt>
+						<dd><p><a href="queues.memorymessagequeue.html">MemoryMessageQueue</a></p>
+						</dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -105,12 +111,13 @@
 					<div class="tsd-signature tsd-kind-icon">expiration<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Date</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/LockedMessage.ts#L11">queues/LockedMessage.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/LockedMessage.ts#L20">queues/LockedMessage.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The time at which the lock expires. Calculated as <code><time when locked> + timeout</code></p>
+							<p>The expiration time for the message lock.
+							If it is null then the message is not locked.</p>
 						</div>
 					</div>
 				</section>
@@ -120,12 +127,12 @@
 					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <a href="queues.messageenvelope.html" class="tsd-signature-type">MessageEnvelope</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/LockedMessage.ts#L9">queues/LockedMessage.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/LockedMessage.ts#L14">queues/LockedMessage.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The message to lock.</p>
+							<p>The incoming message.</p>
 						</div>
 					</div>
 				</section>
@@ -135,12 +142,12 @@
 					<div class="tsd-signature tsd-kind-icon">timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/7b5afed/src/queues/LockedMessage.ts#L13">queues/LockedMessage.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-messaging-node/blob/5204207/src/queues/LockedMessage.ts#L25">queues/LockedMessage.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The locks timeout.</p>
+							<p>The lock timeout in milliseconds.</p>
 						</div>
 					</div>
 				</section>
