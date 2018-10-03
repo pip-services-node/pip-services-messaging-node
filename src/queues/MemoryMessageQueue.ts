@@ -18,12 +18,12 @@ import { LockedMessage } from './LockedMessage';
  * 
  * ### Configuration parameters ###
  * 
- * name:                        name of the message queue
+ * - name:                        name of the message queue
  * 
  * ### References ###
  * 
- * - <code>*:logger:*:*:1.0</code>           (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
- * - <code>*:counters:*:*:1.0</code>         (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/count.icounters.html ICounters]] components to pass collected measurements
+ * - <code>\*:logger:\*:\*:1.0</code>           (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
+ * - <code>\*:counters:\*:\*:1.0</code>         (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/count.icounters.html ICounters]] components to pass collected measurements
  * 
  * @see [[MessageQueue]]
  * @see [[MessagingCapabilities]]
